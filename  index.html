@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Love Story | Sheenu with Roohi</title>
+    
+    <!-- Tailwind CSS Engine -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                               darkFilm: '#0a0508',
+                         deepRed: '#8a1c38',
+                        softPink: '#f48fb1',
+                        goldGlow: '#d4af37'
+                    },
+
+
+
+
+
+                      fontFamily: {
+                        cinematic: ['Playfair Display', 'serif'],
+script: ['Dancing Script', 'cursive'],
+                        sansCore: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- GSAP for Cinematic Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+
+body {
+    background-color: #0a0508;
+    color: #fdf2f8;
+    overflow-x: hidden;
+    user-select: none;
+}
+
+
+
+
+
+/* Ambient Floating 3D Clouds (Scene 1 & Background) */
+        
+
+
+.ambient-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 0;
+    opacity: 0.6;
+    animation: float 20s infinite ease-in-out alternate;
+}
+        
+.orb-1 { 
+     width: 400px; 
+     height: 400px; 
+     background: #8a1c38; 
+     top: -10%; 
+     left: -10%; 
+}
+        
+
+.orb-2 { 
+     width: 500px; 
+     height: 500px; 
+     background: #4a0e2e;    
+     bottom: -20%; 
+     right: -10%; 
+     animation-delay: -5s; 
+}
+        
+
+
+.orb-3 { 
+     width: 300px; 
+     height: 300px; 
+     background: #f48fb1; 
+     top: 40%; 
+     left: 50%; 
+     opacity: 0.3; 
+     animation-delay: -10s; 
+}
+
+        
+@keyframes float {
+            
+     0% { transform: translate(0, 0) scale(1); }
+            
+     100% { transform: translate(50px, 100px) scale(1.2); }
+}
+
+        
+/* Glassmorphism */
+        
+.glass-card {
+      background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+
+
+   /* 3D Carousel (Scene 5) */
+        .carousel-container {
+            perspective: 1000px;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .carousel-3d {
+            width: 200px;
+            height: 250px;
+            transform-style: preserve-3d;
+            animation: autoRotate 20s infinite linear;
+        }
+
+.carousel-item {
+    position: absolute;
+    width: 200px;
+    height: 250px;
+    background: rgba(0, 0, 0, 0.5); /* Background thoda dark kiya */
+    border: 2px solid rgba(244,143,177,0.3); /* Border thoda mota kiya */
+    border-radius: 12px;
+    overflow: hidden; /* Photo bahar na nikle isliye */
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+        .carousel-item:hover {
+            box-shadow: 0 0 30px rgba(244, 143, 177, 0.6);
+        }
+        /* Positioning 6 panels in a 3D circle */
+        .carousel-item:nth-child(1) { transform: rotateY(0deg) translateZ(250px); }
+        .carousel-item:nth-child(2) { transform: rotateY(60deg) translateZ(250px); }
+        .carousel-item:nth-child(3) { transform: rotateY(120deg) translateZ(250px); }
+        .carousel-item:nth-child(4) { transform: rotateY(180deg) translateZ(250px); }
+        .carousel-item:nth-child(5) { transform: rotateY(240deg) translateZ(250px); }
+        .carousel-item:nth-child(6) { transform: rotateY(300deg) translateZ(250px); }
+
+        @keyframes autoRotate {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+    /* Custom Scrollbar */
+
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0508; }
+        ::-webkit-scrollbar-thumb { background: #8a1c38; border-radius: 10px; }
+
+/* Magic Touch Heart Effect */
+
+
+.magic-heart {
+    position: fixed; /* absolute ki jagah fixed use karo */
+    font-size: 20px;
+    pointer-events: none;
+    z-index: 999999; /* Isko sabse upar rakho */
+    animation: popUp 1s ease-out forwards;
+}
+
+    </style>
+</head>
+<body class="font-sansCore relative selection:bg-softPink selection:text-darkFilm">
+
+    <!-- Ambient 3D Clouds Background -->
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+
+<!-- 🎬 THE NEW CINEMATIC VIDEO MODAL (HIDDEN BY DEFAULT) -->
+<div id="video-modal" class="fixed inset-0 z-[200] bg-[#0a0508]/95 backdrop-blur-xl hidden flex-col items-center justify-center transition-opacity duration-500 opacity-0">
+    
+    <!-- Back / Close Button -->
+    <button onclick="closeVideoModal()" class="absolute top-8 left-6 md:left-10 text-white bg-white/10 hover:bg-white/20 border border-white/20 px-5 py-2.5 rounded-full font-mono text-xs uppercase tracking-widest flex items-center gap-2 transition-all shadow-lg active:scale-95">
+        <span>←</span> Back to Page
+    </button>
+    
+    <!-- Main Video Player -->
+    <div class="w-full max-w-4xl px-4 md:px-0">
+        <div class="rounded-2xl overflow-hidden shadow-[0_0_60px_rgba(244,143,177,0.3)] border border-white/10 bg-black">
+            <!-- Yeh wahi video hai jo pop-up mein chalegi -->
+            <video id="front-video-player" class="w-full h-auto max-h-[80vh] object-contain outline-none" controls playsinline>
+                <source src="video01.mp4" type="video/mp4">
+            </video>
+        </div>
+        <p class="text-center text-softPink/60 font-mono text-[10px] mt-4 uppercase tracking-widest">Cinematic Mode Engaged</p>
+    </div>
+</div>
+
+
+    <!-- 🍿 SCENE 1: THE TEASER (Cinematic Intro) -->
+
+
+     <div id="intro-teaser"
+class="fixed inset-0 z-[100] flex items-center justify-center bg-cover bg-center">
+
+
+        <h1 id="intro-text" class="font-cinematic italic text-center px-6 leading-relaxed opacity-0 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
+        </h1>
+    </div>
+
+    <!-- 🎵 SCENE 3: THE BACKGROUND SCORE (Fixed Vinyl Player) -->
+    <div id="audio-player" class="fixed top-6 right-6 z-50 opacity-0 translate-x-10 transition-all duration-700">
+        <div class="glass-card px-4 py-2 rounded-full flex items-center gap-3 shadow-2xl border-softPink/20 cursor-pointer hover:bg-white/10" onclick="toggleAndChangeMusic()">
+            <div id="vinyl-disc" class="w-8 h-8 rounded-full bg-gradient-to-tr from-neutral-900 to-neutral-700 flex items-center justify-center border border-white/20 shadow-md">
+                <div class="w-2 h-2 rounded-full bg-softPink"></div>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-[9px] font-mono tracking-widest text-softPink uppercase">Soundtrack</span>
+                <span id="audio-status" class="text-xs font-bold">Tap to Play 🎵</span>
+            </div>
+        </div>
+        <!-- Playlist Array mapped in JS -->
+        <audio id="bg-music" loop src="song01.mp3"></audio>
+    </div>
+
+    <!-- MAIN MOVIE CONTENT -->
+    <main id="main-content" class="relative z-10 w-full max-w-2xl mx-auto px-4 pb-20 opacity-0 hidden flex-col items-center space-y-24">
+
+     
+<!-- ⏱️ SCENE 2: THE HEARTBEAT (Live 3D Counter) -->
+        <section class="w-full min-h-screen flex flex-col justify-center items-center pt-20 px-4">
+            
+            <div class="text-center mb-6">
+                <h2 id="love-heading" class="text-5xl md:text-6xl font-cinematic text-[#f48fb1] drop-shadow-[0_0_15px_rgba(244,143,177,0.4)]"></h2>
+                <p id="counter-title" class="text-[10px] md:text-xs font-mono uppercase tracking-[0.4em] text-[#f48fb1]/80 mt-4 font-bold"></p>
+            </div>
+
+            <!-- Main Glowing Timer Card (Ab ispar click karne se video chalegi) -->
+            <div id="tilt-card" ondblclick="openVideoModal()" class="cursor-pointer relative overflow-hidden w-full max-w-md md:max-w-lg rounded-[2.5rem] border border-[#f48fb1]/40 shadow-[0_0_40px_rgba(244,143,177,0.25)] transform transition-transform duration-200 ease-out p-6 md:p-8 flex flex-col items-center group">
+
+                <!-- Background Video (Paused) -->
+                <video class="absolute inset-0 w-full h-full object-cover z-0 opacity-40 transition-opacity duration-300 group-hover:opacity-60 pointer-events-none" playsinline muted>
+                    <source src="video01.mp4" type="video/mp4">
+                </video>
+
+                <!-- Dark Blur Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-b from-[#0a0508]/60 via-[#0a0508]/30 to-[#0a0508]/80 z-10 backdrop-blur-[2px]"></div>
+
+                <!-- Card Content -->
+                <div class="relative z-20 w-full flex flex-col items-center">
+
+                    <!-- Live Moments Badge -->
+                    <div class="self-start flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-black/30 backdrop-blur-md mb-6 shadow-md">
+                        <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span class="text-[8px] font-mono text-white tracking-widest uppercase">Live Moments</span>
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                    </div>
+
+                    <!-- Together Since -->
+                    <div class="flex items-center gap-4 mb-6 w-full justify-center opacity-90">
+                        <div class="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#f48fb1]"></div>
+                        <span class="font-script text-2xl text-[#f48fb1]">Together Since</span>
+                        <div class="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#f48fb1]"></div>
+                    </div>
+
+                    <!-- Top Row: Years -->
+                    <div class="flex justify-center w-full mb-4">
+                        <div class="w-32 h-32 rounded-full border border-[#f48fb1] bg-black/40 backdrop-blur-md flex flex-col justify-center items-center shadow-[0_0_25px_rgba(244,143,177,0.3)]">
+                            <span id="l-years" class="text-5xl font-cinematic text-white drop-shadow-md">00</span>
+                            <span id="label-year" class="text-[9px] uppercase tracking-widest text-[#f48fb1] mt-1"></span>
+                        </div>
+                    </div>
+
+                    <!-- Middle Row: Months & Days -->
+                    <div class="grid grid-cols-2 gap-4 w-full mb-4">
+                        <div class="rounded-2xl border border-[#f48fb1]/50 bg-black/40 backdrop-blur-md flex flex-col justify-center items-center py-5 shadow-[0_0_15px_rgba(244,143,177,0.15)]">
+                            <span id="l-months" class="text-4xl font-cinematic text-white drop-shadow-md">00</span>
+                            <span id="label-month" class="text-[8px] uppercase tracking-widest text-[#f48fb1] mt-1"></span>
+                        </div>
+                        <div class="rounded-2xl border border-[#f48fb1]/50 bg-black/40 backdrop-blur-md flex flex-col justify-center items-center py-5 shadow-[0_0_15px_rgba(255,143,177,0.15)]">
+                            <span id="l-days" class="text-4xl font-cinematic text-white drop-shadow-md">00</span>
+                            <span id="label-day" class="text-[8px] uppercase tracking-widest text-[#f48fb1] mt-1"></span>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Row: Hours, Mins, Secs -->
+                    <div class="grid grid-cols-3 gap-3 w-full mb-6">
+                        <div class="rounded-xl border border-[#f48fb1]/30 bg-black/40 backdrop-blur-md flex flex-col justify-center items-center py-3 shadow-[0_0_10px_rgba(244,143,177,0.1)]">
+                            <span id="l-hours" class="text-2xl font-cinematic text-white drop-shadow-md">00</span>
+                            <span id="label-hour" class="text-[7px] uppercase tracking-widest text-[#f48fb1] mt-1"></span>
+                        </div>
+                        <div class="rounded-xl border border-[#f48fb1]/30 bg-black/40 backdrop-blur-md flex flex-col justify-center items-center py-3 shadow-[0_0_10px_rgba(244,143,177,0.1)]">
+                            <span id="l-minutes" class="text-2xl font-cinematic text-white drop-shadow-md">00</span>
+                            <span id="label-minute" class="text-[7px] uppercase tracking-widest text-[#f48fb1] mt-1"></span>
+                        </div>
+                        <div class="rounded-xl border border-[#f48fb1] bg-[#f48fb1]/10 backdrop-blur-md flex flex-col justify-center items-center py-3 shadow-[0_0_20px_rgba(244,143,177,0.3)]">
+                            <span id="l-seconds" class="text-2xl font-cinematic text-white drop-shadow-md">00</span>
+                            <span id="label-second" class="text-[7px] uppercase tracking-widest text-[#f48fb1] mt-1"></span>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Line Ornament -->
+                    <div class="flex items-center gap-2 opacity-60">
+                        <div class="w-8 h-[1px] bg-[#f48fb1]"></div>
+                        <span class="text-[#f48fb1] text-xs">♡</span>
+                        <div class="w-8 h-[1px] bg-[#f48fb1]"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Quote below card -->
+            <p class="mt-8 font-cinematic italic text-sm md:text-base text-[#f48fb1]/80 tracking-wide text-center px-4">
+                ✧ "Not perfect, but perfect for each other." ✧
+            </p>
+
+        </section>
+        <!-- 📖 SCENE 4: THE FLASHBACK (Timeline) -->
+        <section class="w-full space-y-8">
+            <div class="text-center mb-12">
+                <span class="text-xs font-mono tracking-[0.2em] text-gray-400 uppercase">Director's Cut</span>
+                <h3 class="font-cinematic text-3xl text-white mt-2">The Flashback</h3>
+            </div>
+
+            <div class="relative border-l-2 border-deepRed ml-4 md:ml-8 space-y-12 pb-8">
+
+
+
+
+
+
+
+
+      <!-- Milestone 1 -->
+                <div class="timeline-item relative pl-8 opacity-0 translate-y-10">
+                    <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-softPink shadow-[0_0_10px_#f48fb1]"></div>
+                    <span class="text-[10px] font-mono text-softPink uppercase tracking-widest bg-deepRed/20 px-2 py-1 rounded-md">1 August 2023 4:00PM</span>
+                    <h4 class="text-2xl font-cinematic text-white mt-3">The Magic Day ✨</h4>
+                    <p class="text-sm text-gray-400 mt-2 font-light leading-relaxed">Jahan hum pehli baar mile the. suruwat achi nahi thi par jab aap mere paas aaye fir sab khubsurat lagne laga mene ye bat apko kabhi batai nahi par mene es din apko dekh kar socha tha meri wife asi honi chahiye kisi se koi matlab nahi dekhna tak nahi kisi ko</p>
+                </div>
+
+       
+
+
+
+
+       <!-- Milestone 2 -->
+                <div class="timeline-item relative pl-8 opacity-0 translate-y-10">
+                    <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-softPink shadow-[0_0_10px_#f48fb1]"></div>
+                    <span class="text-[10px] font-mono text-softPink uppercase tracking-widest bg-deepRed/20 px-2 py-1 rounded-md">Late Nights</span>
+                    <h4 class="text-2xl font-cinematic text-white mt-3">Late Night Talks 💬</h4>
+                    <p class="text-sm text-gray-400 mt-2 font-light leading-relaxed">Ghanton baatein karna, bina kisi wajah ke muskurana, aur neend aane par bhi phone na rakhna.</p>
+                </div>
+
+
+
+
+
+
+
+
+
+      <!-- Milestone 3 -->
+                <div class="timeline-item relative pl-8 opacity-0 translate-y-10">
+                    <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-softPink shadow-[0_0_10px_#f48fb1]"></div>
+                    <span class="text-[10px] font-mono text-softPink uppercase tracking-widest bg-deepRed/20 px-2 py-1 rounded-md">The Milestone</span>
+                    <h4 class="text-2xl font-cinematic text-white mt-3">The Big 'YES' 💍</h4>
+                    <p class="text-sm text-gray-400 mt-2 font-light leading-relaxed">Wo pal jab darr aur khushi ek sath thi, aur apne meri poori duniya haseen bana di.</p>
+                </div>
+            </div>
+        </section>
+
+
+
+<!-- 📸 SCENE 5: THE MONTAGE (3D Photo Carousel) -->
+<section class="w-full space-y-6 pt-10">
+    <div class="text-center">
+        <span class="text-xs font-mono tracking-[0.2em] text-gray-400 uppercase">Our Memories</span>
+        <h3 class="font-cinematic text-3xl text-white mt-2">Love in Frames</h3>
+    </div>
+
+    <div class="carousel-container overflow-hidden">
+        <div class="carousel-3d hover:[animation-play-state:paused]">
+            <!-- Photo 1 -->
+            <div class="carousel-item p-1">
+                <img src="photo02.png" class="w-full h-full object-cover rounded-lg border border-[#f48fb1]/30">
+            </div>
+            <!-- Photo 2 -->
+            <div class="carousel-item p-1">
+                <img src="photo03.png" class="w-full h-full object-cover rounded-lg border border-[#f48fb1]/30">
+            </div>
+            <!-- Photo 3 -->
+            <div class="carousel-item p-1">
+                <img src="photo04.png" class="w-full h-full object-cover rounded-lg border border-[#f48fb1]/30">
+            </div>
+            <!-- Photo 4 -->
+            <div class="carousel-item p-1">
+                <img src="photo05.png" class="w-full h-full object-cover rounded-lg border border-[#f48fb1]/30">
+            </div>
+            <!-- Photo 5 -->
+            <div class="carousel-item p-1">
+                <img src="photo06.png" class="w-full h-full object-cover rounded-lg border border-[#f48fb1]/30">
+            </div>
+            <!-- Photo 6 -->
+            <div class="carousel-item p-1">
+                <img src="photo07.png" class="w-full h-full object-cover rounded-lg border border-[#f48fb1]/30">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 🛍️ SCENE 7: THE END CREDITS (Business Pitch) -->
+
+        <section class="w-full pt-16 text-center border-t border-white/10 mt-10">
+            <p class="font-cinematic italic text-lg text-gray-300 mb-6 leading-relaxed">
+                "Aapki love story bhi toh kisi movie se kam nahi...<br>
+                <span class="text-softPink">Unhe surprise kijiye unki apni digital duniya se.</span>"
+            </p>
+            
+            <button class="px-8 py-4 rounded-full bg-gradient-to-r from-deepRed to-pink-600 text-white font-bold tracking-widest uppercase text-sm shadow-[0_0_30px_rgba(244,143,177,0.4)] hover:shadow-[0_0_50px_rgba(244,143,177,0.7)] hover:scale-105 transition-all duration-300">
+                Book Your Love Website Now 🚀
+            </button>
+        </section>
+
+    </main>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+
+
+
+// ==========================================
+// WEBSITE SETTINGS
+// ==========================================
+
+
+
+
+
+// ==========================
+// GENERAL SETTINGS
+// ==========================
+
+
+
+
+const WEBSITE_NAME = "Sheenu ❤️ Roohi";
+
+
+const MAIN_FONT = "Plus Jakarta Sans";
+
+
+const TEXT_COLOR = "#ffffff";
+
+
+
+
+
+// ==========================
+// INTRO SCREEN (SCENE 1)
+// ==========================
+
+
+
+
+const INTRO_BACKGROUND = "Photo01.png";
+
+const INTRO_TEXT = `Every love story is beautiful,
+but ours is my favorite...`;
+
+const INTRO_TEXT_COLOR = "#FFD700";
+const INTRO_FONT = "Georgia";
+
+const INTRO_FONT_SIZE_MOBILE = "2rem";
+const INTRO_FONT_SIZE_DESKTOP = "6rem";
+
+const INTRO_FADE_IN = 2;
+const INTRO_STAY = 3;
+const INTRO_FADE_OUT = 1;
+const INTRO_SCREEN_FADE = 1;
+
+
+
+// ==========================
+// LOVE COUNTER
+// ==========================
+
+
+
+// Couple Name
+const LOVE_NAME_1 = "Sheenu";
+const LOVE_NAME_2 = "Roohi";
+
+// Heading
+const COUNTER_TITLE = "Our Jurney Begins Here";
+
+// Love Date & Time
+const LOVE_START_DATE = "2023-08-01";
+const LOVE_START_HOUR = 16;
+const LOVE_START_MINUTE = 0;
+const LOVE_START_SECOND = 0;
+
+// Heading Style
+
+// Heading Style (Updated for Screenshot look)
+const LOVE_NAME_COLOR = "#f48fb1";
+const LOVE_NAME_FONT = "Playfair Display";
+const LOVE_NAME_SIZE = "3.5rem";
+
+// Counter Labels
+const LABEL_YEAR = "Years";
+const LABEL_MONTH = "Months";
+const LABEL_DAY = "Days";
+const LABEL_HOUR = "Hours";
+const LABEL_MINUTE = "Minutes";
+const LABEL_SECOND = "Seconds";
+
+// ==========================
+// LETTER
+// ==========================
+const LETTER_TITLE = "My Dearest,";
+
+const LETTER_TEXT = `
+Tum meri movie ka wo hissa ho
+jise main baar baar dekhna chahta hu.
+
+Meri kahani tumhare bina adhuri hai.
+
+I Love You Forever ❤️
+`;
+
+const LETTER_FONT = "Playfair Display";
+const LETTER_TEXT_COLOR = "#333333";
+const LETTER_BACKGROUND = "#fff5f8";
+const LETTER_OPEN_STYLE = "Envelope";
+
+// ==========================
+// NEW VIDEO MODAL LOGIC (DOUBLE CLICK)
+// ==========================
+const videoModal = document.getElementById('video-modal');
+const frontVideo = document.getElementById('front-video-player');
+const bgMusic = document.getElementById('bg-music');
+let wasMusicPlaying = false;
+
+function openVideoModal() {
+    // Agar background music baj raha hai, toh use pause kar do taaki video ki aawaz aaye
+    if(!bgMusic.paused) {
+        wasMusicPlaying = true;
+        bgMusic.pause();
+        document.getElementById('vinyl-disc').style.animationPlayState = 'paused';
+    }
+
+    videoModal.classList.remove('hidden');
+    videoModal.classList.add('flex');
+    
+    // Thoda sa delay taaki fade-in animation smooth ho
+    setTimeout(() => {
+        videoModal.classList.remove('opacity-0');
+        frontVideo.play();
+    }, 50);
+}
+
+function closeVideoModal() {
+    frontVideo.pause(); // Video rok do
+    
+    videoModal.classList.add('opacity-0');
+    setTimeout(() => {
+        videoModal.classList.add('hidden');
+        videoModal.classList.remove('flex');
+        
+        // Agar gaana baj raha tha video kholne se pehle, toh wapas chala do
+        if(wasMusicPlaying) {
+            bgMusic.play();
+            document.getElementById('vinyl-disc').style.animationPlayState = 'running';
+        }
+    }, 500); // 500ms fade out duration
+}
+
+// ==========================
+// BUSINESS
+// ==========================
+const WHATSAPP_NUMBER = "918923491317";
+const BUTTON_TEXT = "Book Your Love Website Now 🚀";
+
+
+
+
+// --- SCENE 1: The Teaser Entrance ---
+
+
+
+
+
+        window.addEventListener('load', () => {
+
+
+document.getElementById("intro-teaser").style.backgroundImage =
+`url('${INTRO_BACKGROUND}')`;
+
+
+document.getElementById("intro-text").innerHTML =
+INTRO_TEXT.replace(/\n/g, "<br>");
+
+
+document.getElementById("intro-text").style.fontSize =
+INTRO_FONT_SIZE_MOBILE;
+
+if(window.innerWidth >= 768){
+    document.getElementById("intro-text").style.fontSize =
+    INTRO_FONT_SIZE_DESKTOP;
+}
+
+
+document.getElementById("intro-text").style.color =
+INTRO_TEXT_COLOR;
+
+
+document.getElementById("intro-text").style.fontFamily =
+INTRO_FONT;
+
+
+ const tl = gsap.timeline();
+
+
+
+
+            
+ // Fade in text, scale up slightly
+     tl.to("#intro-text", {
+       opacity: 1, 
+       scale: 1.05, 
+       duration: INTRO_FADE_IN, 
+       ease: "power2.out" 
+     })
+
+
+
+
+
+// Wait 2 seconds
+     .to({}, { 
+       duration: INTRO_STAY
+     })
+              
+
+
+
+
+// Fade out text and overlay
+     .to("#intro-text", { 
+       opacity: 0, 
+       scale: 1.1, 
+       duration:  INTRO_FADE_OUT
+     })
+
+
+
+
+     .to("#intro-teaser", { 
+       opacity: 0, 
+       duration: INTRO_SCREEN_FADE, onComplete: () => {
+                  document.getElementById('intro-teaser').style.display = 'none';
+                  document.getElementById('main-content').classList.remove('hidden');
+                  document.getElementById('main-content').classList.add('flex');
+                  
+                  // Fade in main content
+                  gsap.to("#main-content", { opacity: 1, duration: 1.5 });
+              }}, "-=0.5");
+        });
+
+        // --- SCENE 2: The Heartbeat (Live Counter & 3D Tilt) ---
+
+const START_DATE = new Date(
+`${LOVE_START_DATE}T${String(LOVE_START_HOUR).padStart(2,'0')}:${String(LOVE_START_MINUTE).padStart(2,'0')}:${String(LOVE_START_SECOND).padStart(2,'0')}`
+);
+        
+        function updateLiveCounter() {
+            const now = new Date();
+            const diff = now - START_DATE;
+            
+            const daysTotal = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const years = Math.floor(daysTotal / 365);
+
+            const months = Math.floor((daysTotal % 365) / 30);
+            const days = (daysTotal % 365) % 30;
+
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('l-years').innerText = String(years).padStart(2, '0');
+            document.getElementById('l-months').innerText = String(months).padStart(2, '0');
+            document.getElementById('l-days').innerText = String(days).padStart(2, '0');
+
+document.getElementById('l-hours').innerText = String(hours).padStart(2, '0');
+
+document.getElementById('l-minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('l-seconds').innerText = String(seconds).padStart(2, '0');
+        }
+        setInterval(updateLiveCounter, 1000);
+        updateLiveCounter();
+
+document.getElementById("love-heading").innerHTML =
+`${LOVE_NAME_1} <span class="animate-pulse inline-block text-red-500">❤️</span> ${LOVE_NAME_2}`;
+
+document.getElementById("love-heading").style.color =
+LOVE_NAME_COLOR;
+
+document.getElementById("love-heading").style.fontFamily =
+LOVE_NAME_FONT;
+
+document.getElementById("love-heading").style.fontSize =
+LOVE_NAME_SIZE;
+
+document.getElementById("counter-title").innerText =
+COUNTER_TITLE;
+
+document.getElementById("label-year").innerText = LABEL_YEAR;
+document.getElementById("label-month").innerText = LABEL_MONTH;
+document.getElementById("label-day").innerText = LABEL_DAY;
+document.getElementById("label-hour").innerText = LABEL_HOUR;
+document.getElementById("label-minute").innerText = LABEL_MINUTE;
+document.getElementById("label-second").innerText = LABEL_SECOND;
+
+        // 3D Tilt on Main Card
+        const tiltCard = document.getElementById('tilt-card');
+        window.addEventListener('mousemove', (e) => {
+            if(window.innerWidth < 768) return; // Disable on small mobile screens for performance
+            const x = (window.innerWidth / 2 - e.pageX) / 25;
+            const y = (window.innerHeight / 2 - e.pageY) / 25;
+            tiltCard.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+        });
+        window.addEventListener('mouseleave', () => {
+            tiltCard.style.transform = `rotateY(0deg) rotateX(0deg)`;
+        });
+
+        // --- MUSIC PLAYER LOGIC ---
+const audioPlayer = document.getElementById('bg-music');
+const vinylDisc = document.getElementById('vinyl-disc');
+const audioStatus = document.getElementById('audio-status');
+
+function toggleMusic() {
+    if (audioPlayer.paused) {
+        audioPlayer.play().then(() => {
+            vinylDisc.style.animation = "autoRotate 2s infinite linear"; // Disc ghumne lagegi
+            audioStatus.innerText = "Playing... 🎵";
+        }).catch(e => {
+            console.log("Play failed: ", e);
+            alert("Music file load nahi ho rahi, check karo file folder mein hai ya nahi!");
+        });
+    } else {
+        audioPlayer.pause();
+        vinylDisc.style.animation = "none"; // Disc ruk jayegi
+        audioStatus.innerText = "Paused ⏸️";
+    }
+}
+
+// Player ko scroll par show karne ka logic
+window.addEventListener('scroll', () => {
+    const playerUI = document.getElementById('audio-player');
+    if(window.scrollY > 150) {
+        playerUI.classList.remove('opacity-0', 'translate-x-10');
+        playerUI.classList.add('opacity-100', 'translate-x-0');
+    }
+});
+
+        // --- SCENE 4: The Flashback (ScrollTrigger Animations) ---
+        // Need slight delay to allow layout to render after GSAP intro
+        setTimeout(() => {
+            gsap.utils.toArray('.timeline-item').forEach((item, i) => {
+                gsap.to(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power2.out",
+                    delay: i * 0.1
+                });
+            });
+        }, 3500);
+
+
+// ==========================
+// MAGIC TOUCH HEART EFFECT
+// ==========================
+document.addEventListener('click', function(e) {
+    createHeart(e.clientX, e.clientY);
+});
+
+document.addEventListener('touchstart', function(e) {
+    createHeart(e.touches[0].clientX, e.touches[0].clientY);
+});
+
+function createHeart(x, y) {
+    const heart = document.createElement('div');
+    heart.className = 'magic-heart';
+    heart.innerHTML = '❤️';
+    // Mouse/Touch ke coordinate par dil rakh do
+    heart.style.left = x + 'px';
+    heart.style.top = y + 'px';
+    
+    // Dil ko directly body mein add karo
+    document.body.appendChild(heart);
+
+    // 1 second baad dil ko delete kar do
+    setTimeout(() => {
+        heart.remove();
+    }, 1000);
+}
+
+    </script>
+</body>
+</html>

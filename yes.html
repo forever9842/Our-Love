@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Hidden Memories Map</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+        }
+
+        /* Full Screen Map */
+        #map {
+            height: 100vh;
+            width: 100vw;
+            z-index: 1; 
+        }
+
+        /* Header Floating on Map */
+        .map-header {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10; 
+            background: rgba(20, 20, 20, 0.85);
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-align: center;
+            border: 2px solid #ffd700;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .map-header h1 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            color: #ffd700;
+            font-size: 24px;
+        }
+        
+        .map-header p {
+            margin: 5px 0 0 0;
+            color: #ffffff;
+            font-size: 13px;
+        }
+
+        /* Fixed the Jumping Heart Issue */
+        .leaflet-custom-icon {
+            background: transparent;
+            border: none;
+        }
+
+        .heart-bounce {
+            display: block;
+            font-size: 30px;
+            text-align: center;
+            line-height: 30px;
+            filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.8));
+            animation: bounce 1.5s infinite;
+            cursor: pointer;
+        }
+
+        /* Bounce animation ab location ko shift nahi karega */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-15px);}
+            60% {transform: translateY(-7px);}
+        }
+
+        /* --- MODALS (Password & Video) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; 
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-box {
+            background: linear-gradient(145deg, #111, #222);
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #ffd700;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .modal-box h2 {
+            margin-top: 0;
+            font-family: 'Playfair Display', serif;
+            color: #ffd700;
+        }
+
+        .modal-box input {
+            width: 80%;
+            padding: 12px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #ffd700;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            outline: none;
+            letter-spacing: 2px;
+        }
+
+        .modal-box button {
+            background: #ffd700;
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .modal-box button:hover {
+            background: #fff;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #ffd700;
+            font-size: 28px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        #videoModalBox {
+            max-width: 800px;
+            width: 95%;
+            padding: 20px;
+        }
+        
+        video {
+            width: 100%;
+            border-radius: 10px;
+            outline: none;
+            border: 2px solid #ffd700;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- The Map Container -->
+    <div id="map"></div>
+
+    <!-- 1. PASSWORD MODAL -->
+    <div class="modal-overlay" id="passwordModal">
+        <div class="modal-box" style="position: relative;">
+            <button class="close-btn" onclick="closeModals()">×</button>
+            <h2 id="modalTitle">Memory Found!</h2>
+            <p>Enter the secret code to watch this video.</p>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+            <br>
+            <button onclick="checkPassword()">Unlock Video 🔓</button>
+        </div>
+    </div>
+
+    <!-- 2. VIDEO MODAL -->
+    <div class="modal-overlay" id="videoModal">
+        <div class="modal-box" id="videoModalBox" style="position: relative;">
+            <button class="close-btn" onclick="closeModals()">×</button>
+            <h2 style="margin-bottom: 20px;">Enjoy the memory ❤️</h2>
+            <video id="giftVideo" controls>
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Map Logic -->
+    <script>
+        // 1. Initialize Map
+        const map = L.map('map');
+
+        // 2. Dark Theme Live Map with Labels (Names of places will be visible)
+ 
+
+
+
+        L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+}).addTo(map);
+
+// 3. All 32 Secret Locations
+        const secretLocations = [
+            [29.47623523876556, 77.71368243021881], [29.471815264287375, 77.72399446952905],
+            [29.481256401231533, 77.72707446345449], [29.541604303634326, 77.74060830683509],
+            [29.54968076398697, 77.74575815034684], [29.474204267487607, 77.46444237404644],
+            [29.471628007444327, 77.71823711280668], [29.47273161457709, 77.71728809316949],
+            [29.472955027770244, 77.75162760860213], [29.526313237483592, 77.72396399900884],
+            [29.427556096002785, 77.71867818227075], [29.46692914004264, 77.70025771434922],
+            [29.4679740063991, 77.69924159487508], [29.466247955992873, 77.70418098886746],
+            [29.456634587506333, 77.71781870910405], [29.472294846248516, 77.7217590542747],
+            [29.472999955765484, 77.71477867601526], [29.472592739028464, 77.7129774312264],
+            [29.472767793302292, 77.71355572243192], [29.48889956030974, 77.70465114697258],
+            [29.489203580403398, 77.70346696134385], [29.490592189406332, 77.70425089654736],
+            [29.493835255859945, 77.70683582570649], [29.495971928828297, 77.70119488829674],
+            [29.493438744175272, 77.7047301208498], [29.47790625539466, 77.71344950063667],
+            [29.49962871602416, 77.70967401494354], [29.484530789303875, 77.70895971751868],
+            [29.510947819838453, 77.70341153127346], [29.489873331915287, 77.7025228208869],
+            [29.492557714570673, 77.69831223612229], [29.44890699185476, 77.71991892802004]
+        ];
+
+        // 4. Set map to automatically show ALL 32 locations on screen
+        const bounds = L.latLngBounds(secretLocations);
+        map.fitBounds(bounds, {padding: [50, 50]});
+
+        // 5. Fixed custom Heart Icon
+        const heartIcon = L.divIcon({
+            className: 'leaflet-custom-icon',
+            html: '<div class="heart-bounce">❤️</div>',
+            iconSize: [30, 30],
+            iconAnchor: [15, 30] // This anchors the exact bottom tip of the heart to your coordinates
+        });
+
+let currentSelectedDay = ""; 
+        
+        // 6. Ek group banate hain jisme saare hearts rahenge (Taki ek sath hide/show kar sakein)
+        let memoryMarkers = L.layerGroup();
+
+        // Markers ko direct map par nahi, balki is group mein add kar rahe hain
+        secretLocations.forEach((coord, index) => {
+            let dayNum = index + 1; 
+            let dayStr = dayNum < 10 ? '0' + dayNum : dayNum; 
+
+            let marker = L.marker(coord, {icon: heartIcon}).on('click', () => {
+                openPasswordModal(dayStr);
+            });
+            memoryMarkers.addLayer(marker); 
+        });
+
+        // 7. Hide & Seek Logic (Lagbhag 500 meter ke radius ke liye Zoom Level 16)
+        const zoomThreshold = 16; 
+
+        // Map par nazar rakhna ki wo kitna zoom ho raha hai
+        map.on('zoomend', function() {
+            let currentZoom = map.getZoom();
+
+            if (currentZoom >= zoomThreshold) {
+                // Agar map kaafi kareeb (zoom in) hai -> Hearts dikhao
+                if (!map.hasLayer(memoryMarkers)) {
+                    map.addLayer(memoryMarkers);
+                }
+            } else {
+                // Agar map door se (zoom out) dekh rahe hain -> Hearts chhupao
+                if (map.hasLayer(memoryMarkers)) {
+                    map.removeLayer(memoryMarkers);
+                }
+            }
+        });
+
+        // --- NEW PASSWORD & VIDEO LOGIC ---
+        function openPasswordModal(dayNum) {
+            currentSelectedDay = dayNum; 
+            document.getElementById('modalTitle').innerText = 'Location ' + parseInt(dayNum) + ' Found!';
+            document.getElementById('passwordInput').value = "";
+            document.getElementById('passwordModal').style.display = 'flex';
+        }
+
+        function checkPassword() {
+            let userPassword = document.getElementById('passwordInput').value.trim(); 
+            // Universal Password set to 1432
+            let correctPassword = "Zuha Toseef"; 
+
+            if (userPassword === correctPassword) {
+                document.getElementById('passwordModal').style.display = 'none'; 
+                // Play the corresponding video (e.g., yes01.mp4) based on location clicked
+                let videoFileName = "yes" + currentSelectedDay + ".mp4";
+                playVideo(videoFileName); 
+            } else {
+                alert("Galat password! 🙅‍♂️ Please try again.");
+            }
+        }
+
+        function playVideo(videoFileName) {
+            let videoElement = document.getElementById('giftVideo');
+            videoElement.src = videoFileName;
+            document.getElementById('videoModal').style.display = 'flex';
+            videoElement.play();
+        }
+
+        function closeModals() {
+            document.getElementById('passwordModal').style.display = 'none';
+            document.getElementById('videoModal').style.display = 'none';
+            let videoElement = document.getElementById('giftVideo');
+            videoElement.pause();
+            videoElement.currentTime = 0; 
+        }
+    </script>
+</body>
+</html>

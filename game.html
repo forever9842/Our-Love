@@ -34,6 +34,16 @@
             position: relative;
         }
 
+        #start-video-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
         #close-video-btn {
             position: absolute;
             top: 20px;
@@ -49,6 +59,7 @@
             z-index: 100;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             transition: 0.3s;
+            display: none; /* Starting me chhipa rahega */
         }
 
         #close-video-btn:hover {
@@ -344,11 +355,18 @@
 </head>
 <body>
 
-    <!-- 1. VIDEO SCREEN -->
-    <!-- Video loop mode pe hai aur close button upar hai -->
+    <!-- 1. VIDEO SCREEN (Fixed for iOS and Android) -->
     <div id="video-section">
+        
+        <!-- Pyara sa Start Button (Isse click karte hi video chalegi aur error nahi aayega) -->
+        <div id="start-video-overlay">
+            <button onclick="playIntroVideo()" style="background:#ff4757; color:white; padding:15px 30px; font-size:20px; border:none; border-radius:10px; cursor:pointer; font-family:'Poppins', sans-serif; box-shadow: 0 5px 15px rgba(255,71,87,0.5);">Tap to Open Surprise 🎁</button>
+        </div>
+
         <button id="close-video-btn" onclick="closeVideo()">✖ Close</button>
-        <video id="birthdayVideo" controls autoplay loop>
+        
+        <!-- iOS ke liye playsinline aur webkit-playsinline lagaya hai -->
+        <video id="birthdayVideo" playsinline webkit-playsinline preload="auto" loop>
             <source src="birthday.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -444,10 +462,18 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // --- VIDEO CLOSE LOGIC ---
+        // --- VIDEO START/CLOSE LOGIC ---
+        const bdayVideo = document.getElementById('birthdayVideo');
+        
+        function playIntroVideo() {
+            // Overlay hatao, Close button dikhao, aur video play karo
+            document.getElementById('start-video-overlay').style.display = 'none';
+            document.getElementById('close-video-btn').style.display = 'block';
+            bdayVideo.play();
+        }
+
         function closeVideo() {
-            const vid = document.getElementById('birthdayVideo');
-            vid.pause(); // Video background me stop ho jayegi
+            bdayVideo.pause(); // Video background me stop ho jayegi
             
             // Video section hide karo aur menu dikhao
             document.getElementById('video-section').style.display = 'none';
@@ -643,7 +669,6 @@
                 document.getElementById('sweet-message-text').innerHTML = "Game Over! You've filled my heart completely! ❤️♾️";
                 document.querySelector('#sweet-message-overlay button').style.display = 'none';
                 
-                // Game pura hone par wapas Menu le jana
                 setTimeout(() => {
                     document.getElementById('sweet-message-overlay').style.display = 'none';
                     backToMenu('heart-game-area');

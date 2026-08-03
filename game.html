@@ -7,6 +7,7 @@
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
     
     <!-- 🔥 MAGIC SCRIPT FOR MOBILE TOUCH SUPPORT 🔥 -->
     <script src="https://bernardo-castilho.github.io/DragDropTouch/DragDropTouch.js"></script>
@@ -30,6 +31,29 @@
             justify-content: center;
             align-items: center;
             background: radial-gradient(circle, #1a1a1a, #000);
+            position: relative;
+        }
+
+        #close-video-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 71, 87, 0.9);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+
+        #close-video-btn:hover {
+            background-color: #ff6b81;
+            transform: scale(1.05);
         }
 
         video {
@@ -41,55 +65,6 @@
             outline: none;
         }
 
-        /* --- PHOTO GALLERY SECTION (Hidden by default) --- */
-        #gallery-section {
-            display: none; 
-            padding: 40px 20px;
-            animation: fadeIn 2s ease-in; 
-        }
-
-        #gallery-section h1 {
-            font-family: 'Playfair Display', serif;
-            color: #ffd700;
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-
-        #gallery-section p {
-            color: #ccc;
-            margin-bottom: 40px;
-            font-size: 16px;
-        }
-
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .photo-grid img {
-            width: 100%;
-            height: auto;
-            border-radius: 15px;
-            border: 2px solid #ff4b4b;
-            box-shadow: 0 5px 15px rgba(255, 75, 75, 0.3);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            object-fit: cover;
-        }
-
-        .photo-grid img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 75, 75, 0.6);
-            z-index: 10;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         /* Puzzle Game Styles */
         #funny-puzzle-container {
             text-align: center;
@@ -97,8 +72,7 @@
             font-family: Arial, sans-serif;
         }
 
-        #start-btn {
-            background-color: #ff4757;
+        .game-btn {
             color: white;
             border: none;
             padding: 12px 25px;
@@ -106,18 +80,19 @@
             cursor: pointer;
             border-radius: 5px;
             font-weight: bold;
+            margin-top: 15px;
+            width: 80%;
+            max-width: 300px;
+            transition: 0.3s;
         }
-
-        #start-btn:hover {
-            background-color: #ff6b81;
-        }
+        .game-btn:hover { transform: scale(1.05); }
 
         .puzzle-wrapper {
             display: flex;
             justify-content: center;
-            gap: 20px; /* Thoda gap kam kiya mobile ke liye */
+            gap: 20px; 
             margin-top: 20px;
-            flex-wrap: wrap; /* Yeh phone par boxes ko ek ke niche ek kar dega */
+            flex-wrap: wrap; 
         }
 
         #pieces-board, #target-board {
@@ -130,7 +105,7 @@
             padding: 5px;
             border: 3px dashed #ff4757;
             border-radius: 8px;
-            margin: 0 auto; /* Center karne ke liye */
+            margin: 0 auto; 
         }
 
         .piece {
@@ -139,12 +114,10 @@
             background-size: 300px 300px;
             cursor: grab;
             border-radius: 4px;
-            touch-action: none; /* Phone ko scrolling aur dragging me confuse hone se rokega */
+            touch-action: none; 
         }
 
-        .piece:active {
-            cursor: grabbing;
-        }
+        .piece:active { cursor: grabbing; }
 
         .slot {
             width: 100px;
@@ -162,16 +135,14 @@
         /* --- HEART GAME CSS --- */
         .falling-heart {
             position: absolute;
-            font-size: 35px; /* Heart ka size */
+            font-size: 35px; 
             cursor: pointer;
-            user-select: none; /* Text select hone se rokega */
+            user-select: none; 
             animation: fall linear forwards;
-            -webkit-tap-highlight-color: transparent; /* Mobile me click background hatane ke liye */
+            -webkit-tap-highlight-color: transparent; 
         }
         
-        .falling-heart:active {
-            transform: scale(1.3); /* Tap karte hi thoda bada dikhega feel ke liye */
-        }
+        .falling-heart:active { transform: scale(1.3); }
 
         @keyframes fall {
             0% { top: -50px; opacity: 1; transform: rotate(-10deg); }
@@ -183,6 +154,7 @@
             from { transform: scale(1); }
             to { transform: scale(1.2); }
         }
+
         /* --- MEMORY GAME CSS --- */
         .mem-card {
             width: 70px;
@@ -193,14 +165,11 @@
             transition: transform 0.5s;
         }
 
-        /* Responsive size for phone */
         @media (max-width: 400px) {
             .mem-card { width: 60px; height: 60px; }
         }
 
-        .mem-card.flip {
-            transform: rotateY(180deg);
-        }
+        .mem-card.flip { transform: rotateY(180deg); }
 
         .mem-face {
             width: 100%;
@@ -216,13 +185,11 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
-        /* Chupa hua card (Front) */
         .mem-front {
             background: linear-gradient(135deg, #a29bfe, #6c5ce7);
             border: 2px solid #a29bfe;
         }
 
-        /* Khula hua card (Back) */
         .mem-back {
             background: #f1f2f6;
             color: #2f3542;
@@ -243,14 +210,13 @@
 
         .img-container {
             width: 300px;
-            height: 300px; /* 1:1 Aspect ratio square */
+            height: 300px; 
             overflow: hidden;
             position: relative;
             background: #eee;
             margin: 0 auto;
         }
 
-        /* Mobile ke liye size chota karna */
         @media (max-width: 400px) {
             .img-container { width: 250px; height: 250px; }
         }
@@ -292,13 +258,8 @@
         .prev-btn { left: -20px; }
         .next-btn { right: -20px; }
 
-        /* Smooth Photo Change Animation */
-        .photo-fade-out {
-            animation: slideOut 0.5s forwards;
-        }
-        .photo-fade-in {
-            animation: slideIn 0.5s forwards;
-        }
+        .photo-fade-out { animation: slideOut 0.5s forwards; }
+        .photo-fade-in { animation: slideIn 0.5s forwards; }
 
         @keyframes slideOut {
             0% { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0px); }
@@ -309,13 +270,12 @@
             100% { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0px); }
         }
 
-        /* Peeche chhutne wale Hearts ka animation */
         .magic-heart {
             position: absolute;
             color: #ff4757;
             font-size: 30px;
             animation: flyAway 1s ease-out forwards;
-            pointer-events: none; /* Click roke na */
+            pointer-events: none; 
             z-index: 5;
         }
         @keyframes flyAway {
@@ -345,213 +305,169 @@
 
         .scroll-paper {
             width: 95%;
-            background: #fdf5e6; /* Purane kagaz ka color */
-            /* Paper par lines banane ke liye */
+            background: #fdf5e6;
             background-image: repeating-linear-gradient(transparent, transparent 31px, #dcdde1 31px, #dcdde1 32px);
             box-shadow: inset 0 0 15px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.3);
             border-left: 2px solid #eccc68;
             border-right: 2px solid #eccc68;
-            height: 0; /* Shuru me band rahega */
+            height: 0; 
             overflow: hidden;
-            transition: height 2s ease-in-out; /* Roll open hone ka time */
+            transition: height 2s ease-in-out; 
             box-sizing: border-box;
             padding: 0 20px;
         }
 
         .scroll-paper.open {
-            height: 350px; /* Khulne ke baad ki height */
+            height: 350px; 
             padding: 30px 20px;
             overflow-y: auto;
         }
 
         #handwritten-text {
-            font-family: 'Dancing Script', 'Brush Script MT', cursive; /* Cursive font */
+            font-family: 'Dancing Script', cursive; 
             font-size: 22px;
             color: #1e272e;
             text-align: left;
-            line-height: 32px; /* Background lines ke sath set karne ke liye */
+            line-height: 32px; 
             white-space: pre-wrap; 
             margin: 0;
             text-shadow: 0px 0px 1px rgba(0,0,0,0.2);
         }
 
-        /* Typewriter ke aage ka blink karne wala pen/cursor */
         .pen-cursor {
             border-right: 2px solid #1e272e;
             animation: blink 0.7s infinite;
         }
         @keyframes blink { 50% { border-color: transparent; } }
 
-
     </style>
 </head>
 <body>
 
     <!-- 1. VIDEO SCREEN -->
+    <!-- Video loop mode pe hai aur close button upar hai -->
     <div id="video-section">
-        <video id="birthdayVideo" controls autoplay>
+        <button id="close-video-btn" onclick="closeVideo()">✖ Close</button>
+        <video id="birthdayVideo" controls autoplay loop>
             <source src="birthday.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
     </div>
 
-    <!-- Puzzle Game Container Start -->
-    <div id="funny-puzzle-container">
+    <!-- MAIN MENU CONTAINER (Initially Hidden) -->
+    <div id="main-menu-container" style="display: none; padding-bottom: 50px;">
         
         <div id="game-setup">
-            <h2>Dimag ki Dahi Karne Wala Puzzle 😜</h2>
-            <button id="start-btn" onclick="startGame()">Start Game 1</button>
+            <h1 style="color: #ffd700; font-family: 'Playfair Display', serif; margin-top: 30px;">Choose a Surprise ❤️</h1>
+            
+            <button class="game-btn" onclick="startGame()" style="background-color: #ff4757;">Game 1: Jod Tod 🧩</button><br>
+            <button class="game-btn" onclick="startHeartGame()" style="background-color: #ff6b81;">Game 2: Catch My Love 💖</button><br>
+            <button class="game-btn" onclick="startMemoryGame()" style="background-color: #8c7ae6;">Game 3: Memory Match 🧩</button><br>
+            <button class="game-btn" onclick="startGame4()" style="background-color: #ff9f43;">Game 4: Moments of Us 📸</button><br>
+            <button class="game-btn" onclick="startLetterGame()" style="background-color: #2ed573;">A Letter for You 💌</button>
         </div>
 
-        <br><br> <!-- Thoda space dene ke liye -->
-        <button id="start-btn-2" onclick="startHeartGame()" style="background-color: #ff6b81; color: white; border: none; padding: 12px 25px; font-size: 18px; cursor: pointer; border-radius: 5px; font-weight: bold; margin-top: 10px;">
-            Start Game 2: Catch My Love 💖
-        </button>
-
-        <br><br>
-        <button id="start-btn-3" onclick="startMemoryGame()" style="background-color: #8c7ae6; color: white; border: none; padding: 12px 25px; font-size: 18px; cursor: pointer; border-radius: 5px; font-weight: bold; margin-top: 10px;">
-            Start Game 3: Memory Match 🧩
-        </button>
-
-
-        <br><br>
-        <button id="start-btn-4" onclick="startGame4()" style="background-color: #ff9f43; color: white; border: none; padding: 12px 25px; font-size: 18px; cursor: pointer; border-radius: 5px; font-weight: bold; margin-top: 10px;">
-            Game 4: Moments of Us 📸
-        </button>
-
-        <br><br>
-        <button id="start-btn-5" onclick="startLetterGame()" style="background-color: #2ed573; color: white; border: none; padding: 12px 25px; font-size: 18px; cursor: pointer; border-radius: 5px; font-weight: bold; margin-top: 10px;">
-            A Letter for You 💌
-        </button>
-
-
-
-
-
-        <div id="game-area" style="display: none;">
+        <!-- Game 1 Area -->
+        <div id="game-area" style="display: none; margin-top: 30px;">
             <h2 id="level-title">Level 1: Ye toh baccha bhi kar lega, jaldi karo!</h2>
             <p id="funny-message">Sahi jagah par drag karke chodo, warna beizzati pakki hai!</p>
-            
             <div class="puzzle-wrapper">
                 <div id="pieces-board"></div>
                 <div id="target-board"></div>
             </div>
+            <button onclick="backToMenu('game-area')" class="game-btn" style="background: #333; margin-top: 30px;">🔙 Back to Menu</button>
         </div>
         
-    </div>
-    <!-- Puzzle Game Container End -->
-
-    <!-- Heart Game (Game 2) Area Start -->
-    <div id="heart-game-area" style="display: none; position: relative; height: 75vh; max-width: 500px; margin: 20px auto; background: radial-gradient(circle, #2a0013, #000); border: 3px solid #ff4d6d; border-radius: 15px; overflow: hidden; box-shadow: 0 0 20px rgba(255, 77, 109, 0.5);">
-        
-        <h2 id="heart-level-title" style="color: #ffb3c6; margin-top: 15px; font-family: 'Playfair Display', serif;">Level 1</h2>
-        <h3 style="color: white; margin: 5px 0;">Hearts Caught: <span id="heart-score" style="color: #ffd700;">0</span> / <span id="heart-target">20</span></h3>
-        <p style="color: #ffcccb; font-size: 14px; font-style: italic;">Girte hue hearts ko jaldi jaldi tap karo!</p>
-        
-        <!-- Yahan hearts girenge -->
-        <div id="falling-hearts-container" style="position: absolute; width: 100%; height: calc(100% - 100px); top: 100px; left: 0;"></div>
-        
-        <!-- Romantic Message Popup Overlay -->
-        <div id="sweet-message-overlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); flex-direction: column; justify-content: center; align-items: center; z-index: 100; padding: 20px; box-sizing: border-box;">
-            <div style="font-size: 50px; animation: pop 1s infinite alternate;">💖</div>
-            <h2 id="sweet-message-text" style="color: #ffb3c6; font-family: 'Playfair Display', serif; font-size: 22px; line-height: 1.5; margin: 20px 0;">Message</h2>
-            <button onclick="nextHeartLevel()" style="background: #ff4757; color: white; border: none; padding: 12px 30px; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px;">Next Level 💕</button>
-        </div>
-    </div>
-    <!-- Heart Game (Game 2) Area End -->
-
-    <!-- Memory Game (Game 3) Area Start -->
-    <div id="memory-game-area" style="display: none; max-width: 600px; margin: 20px auto; padding: 20px; text-align: center; background: radial-gradient(circle, #192a56, #000); border: 3px solid #00a8ff; border-radius: 15px; box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);">
-        
-        <h2 id="mem-level-title" style="color: #f5f6fa; font-family: 'Playfair Display', serif;">Find every pair</h2>
-        
-        <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;">
-            <div style="background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; color: #00a8ff; font-weight: bold;">⏱️ <span id="time-count">00:00</span></div>
-            <div style="background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; color: #4cd137; font-weight: bold;">Moves: <span id="move-count">0</span></div>
-            <div style="background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; color: #e84118; font-weight: bold;">Pairs: <span id="pair-count">0</span> / <span id="total-pairs">8</span></div>
-        </div>
-
-        <div id="memory-board" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 400px; margin: 0 auto;">
-            <!-- Cards yahan aayenge -->
-        </div>
-
-    </div>
-    <!-- Memory Game (Game 3) Area End -->
-
-
-    <!-- Game 4 (Photo Slideshow) Area Start -->
-    <div id="game-4-area" style="display: none; max-width: 600px; margin: 20px auto; padding: 40px 20px; text-align: center; background: radial-gradient(circle, #2d3436, #000); border: 3px solid #ff9f43; border-radius: 15px; box-shadow: 0 0 20px rgba(255, 159, 67, 0.5); position: relative;">
-        
-        <h2 style="color: #f5f6fa; font-family: 'Playfair Display', serif; font-size: 32px; margin-bottom: 30px; text-shadow: 0 0 10px rgba(255,255,255,0.5);">Moments of us ✨</h2>
-        
-        <div class="polaroid-frame">
-            <button class="nav-btn prev-btn" onclick="prevPhoto()">&#10094;</button>
+        <!-- Game 2 Area -->
+        <div id="heart-game-area" style="display: none; position: relative; height: 75vh; max-width: 500px; margin: 20px auto; background: radial-gradient(circle, #2a0013, #000); border: 3px solid #ff4d6d; border-radius: 15px; overflow: hidden; box-shadow: 0 0 20px rgba(255, 77, 109, 0.5);">
+            <h2 id="heart-level-title" style="color: #ffb3c6; margin-top: 15px; font-family: 'Playfair Display', serif;">Level 1</h2>
+            <h3 style="color: white; margin: 5px 0;">Hearts Caught: <span id="heart-score" style="color: #ffd700;">0</span> / <span id="heart-target">20</span></h3>
+            <p style="color: #ffcccb; font-size: 14px; font-style: italic;">Girte hue hearts ko jaldi jaldi tap karo!</p>
             
-            <div class="img-container" id="photo-box">
-                <img id="gallery-img" src="zuha01.png" alt="Our Moments">
-                <!-- Animation ke liye hearts yahan banenge -->
-            </div>
+            <div id="falling-hearts-container" style="position: absolute; width: 100%; height: calc(100% - 100px); top: 100px; left: 0;"></div>
             
-            <button class="nav-btn next-btn" onclick="nextPhoto()">&#10095;</button>
-            <p class="polaroid-text">Just us ❤️ (<span id="photo-counter">1</span>/20)</p>
-        </div>
-
-        <!-- Audio Tag for Background Music -->
-        <audio id="bg-music" loop>
-            <source src="charkadam.mp3" type="audio/mpeg">
-        </audio>
-        
-    </div>
-    <!-- Game 4 Area End -->
-
-    <!-- Game 5 (Daily Letter) Area Start -->
-    <div id="letter-game-area" style="display: none; max-width: 600px; margin: 20px auto; padding: 40px 20px; text-align: center; background: radial-gradient(circle, #2f3542, #000); border: 3px solid #2ed573; border-radius: 15px; box-shadow: 0 0 20px rgba(46, 213, 115, 0.5);">
-        
-        <h2 style="color: #f5f6fa; font-family: 'Playfair Display', serif; margin-bottom: 20px;">A Special Note for You 🖋️</h2>
-        <p style="color: #a4b0be; font-size: 14px; margin-bottom: 30px;">(Naya letter har din khulega...)</p>
-        
-        <div class="scroll-wrapper">
-            <div class="scroll-top"></div>
-            <div class="scroll-paper" id="scroll-paper">
-                <p id="handwritten-text"></p>
+            <div id="sweet-message-overlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); flex-direction: column; justify-content: center; align-items: center; z-index: 100; padding: 20px; box-sizing: border-box;">
+                <div style="font-size: 50px; animation: pop 1s infinite alternate;">💖</div>
+                <h2 id="sweet-message-text" style="color: #ffb3c6; font-family: 'Playfair Display', serif; font-size: 22px; line-height: 1.5; margin: 20px 0;">Message</h2>
+                <button onclick="nextHeartLevel()" style="background: #ff4757; color: white; border: none; padding: 12px 30px; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px;">Next Level 💕</button>
             </div>
-            <div class="scroll-bottom"></div>
+            <button onclick="backToMenu('heart-game-area')" class="game-btn" style="background: rgba(255,255,255,0.2); position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: auto; font-size: 14px; padding: 8px 15px;">🔙 Menu</button>
         </div>
-        
+
+        <!-- Game 3 Area -->
+        <div id="memory-game-area" style="display: none; max-width: 600px; margin: 20px auto; padding: 20px; text-align: center; background: radial-gradient(circle, #192a56, #000); border: 3px solid #00a8ff; border-radius: 15px; box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);">
+            <h2 id="mem-level-title" style="color: #f5f6fa; font-family: 'Playfair Display', serif;">Find every pair</h2>
+            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;">
+                <div style="background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; color: #00a8ff; font-weight: bold;">⏱️ <span id="time-count">00:00</span></div>
+                <div style="background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; color: #4cd137; font-weight: bold;">Moves: <span id="move-count">0</span></div>
+                <div style="background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; color: #e84118; font-weight: bold;">Pairs: <span id="pair-count">0</span> / <span id="total-pairs">8</span></div>
+            </div>
+            <div id="memory-board" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 400px; margin: 0 auto;"></div>
+            <button onclick="backToMenu('memory-game-area')" class="game-btn" style="background: rgba(255,255,255,0.2); margin-top: 30px;">🔙 Back to Menu</button>
+        </div>
+
+        <!-- Game 4 Area -->
+        <div id="game-4-area" style="display: none; max-width: 600px; margin: 20px auto; padding: 40px 20px; text-align: center; background: radial-gradient(circle, #2d3436, #000); border: 3px solid #ff9f43; border-radius: 15px; box-shadow: 0 0 20px rgba(255, 159, 67, 0.5); position: relative;">
+            <h2 style="color: #f5f6fa; font-family: 'Playfair Display', serif; font-size: 32px; margin-bottom: 30px; text-shadow: 0 0 10px rgba(255,255,255,0.5);">Moments of us ✨</h2>
+            <div class="polaroid-frame">
+                <button class="nav-btn prev-btn" onclick="prevPhoto()">&#10094;</button>
+                <div class="img-container" id="photo-box">
+                    <img id="gallery-img" src="zuha01.png" alt="Our Moments">
+                </div>
+                <button class="nav-btn next-btn" onclick="nextPhoto()">&#10095;</button>
+                <p class="polaroid-text">Just us ❤️ (<span id="photo-counter">1</span>/20)</p>
+            </div>
+            <audio id="bg-music" loop>
+                <source src="charkadam.mp3" type="audio/mpeg">
+            </audio>
+            <br>
+            <button onclick="backToMenu('game-4-area')" class="game-btn" style="background: rgba(255,255,255,0.2); margin-top: 30px;">🔙 Back to Menu</button>
+        </div>
+
+        <!-- Game 5 Area -->
+        <div id="letter-game-area" style="display: none; max-width: 600px; margin: 20px auto; padding: 40px 20px; text-align: center; background: radial-gradient(circle, #2f3542, #000); border: 3px solid #2ed573; border-radius: 15px; box-shadow: 0 0 20px rgba(46, 213, 115, 0.5);">
+            <h2 style="color: #f5f6fa; font-family: 'Playfair Display', serif; margin-bottom: 20px;">A Special Note for You 🖋️</h2>
+            <p style="color: #a4b0be; font-size: 14px; margin-bottom: 30px;">(Naya letter har din khulega...)</p>
+            <div class="scroll-wrapper">
+                <div class="scroll-top"></div>
+                <div class="scroll-paper" id="scroll-paper">
+                    <p id="handwritten-text"></p>
+                </div>
+                <div class="scroll-bottom"></div>
+            </div>
+            <button onclick="backToMenu('letter-game-area')" class="game-btn" style="background: rgba(255,255,255,0.2); margin-top: 30px;">🔙 Back to Menu</button>
+        </div>
+
     </div>
-    <!-- Game 5 Area End -->
+    <!-- MAIN MENU CONTAINER END -->
 
-
-
-    <!-- 2. PHOTO GALLERY SCREEN -->
-    <div id="gallery-section">
-        <h1>Happy Birthday, My Forever ❤️</h1>
-        <p>A look back at some of our beautiful memories...</p>
-        <div class="photo-grid" id="photo-container"></div>
-    </div>
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        const bdayVideo = document.getElementById('birthdayVideo');
-        const videoSection = document.getElementById('video-section');
-        const gallerySection = document.getElementById('gallery-section');
-        const photoContainer = document.getElementById('photo-container');
-
-        for (let i = 1; i <= 10; i++) {
-            let photoNumber = i < 10 ? '0' + i : i; 
-            let imgElement = document.createElement('img');
-            imgElement.src = 'zuha' + photoNumber + '.png'; 
-            imgElement.alt = 'Memory ' + photoNumber;
-            photoContainer.appendChild(imgElement);
+        // --- VIDEO CLOSE LOGIC ---
+        function closeVideo() {
+            const vid = document.getElementById('birthdayVideo');
+            vid.pause(); // Video background me stop ho jayegi
+            
+            // Video section hide karo aur menu dikhao
+            document.getElementById('video-section').style.display = 'none';
+            document.getElementById('main-menu-container').style.display = 'block';
         }
 
-        bdayVideo.addEventListener('ended', function() {
-            videoSection.style.display = 'none';
-            gallerySection.style.display = 'block';
+        // Kisi bhi game se wapas menu aane ke liye helper function
+        function backToMenu(gameAreaId) {
+            document.getElementById(gameAreaId).style.display = 'none';
+            document.getElementById('game-setup').style.display = 'block';
+            
+            // Music band kar do agar back aate hain
+            const music = document.getElementById('bg-music');
+            if(music) { music.pause(); music.currentTime = 0; }
             window.scrollTo(0, 0);
-        });
+        }
 
-        // Puzzle Game Logic
+        // ==========================================
+        // --- GAME 1: PUZZLE LOGIC ---
+        // ==========================================
         const levels = ['game01.png', 'game02.png', 'game03.png'];
         const funnyQuips = [
             "Level 1: Ye toh baccha bhi kar lega, jaldi karo!",
@@ -605,9 +521,7 @@
                 const y = Math.floor(i / 3) * 100;
                 piece.style.backgroundPosition = `-${x}px -${y}px`;
 
-                piece.addEventListener('dragstart', function() {
-                    draggedPiece = this;
-                });
+                piece.addEventListener('dragstart', function() { draggedPiece = this; });
                 piecesArr.push(piece);
             }
 
@@ -627,9 +541,7 @@
                 checkWin();
             } else {
                 document.getElementById('funny-message').innerText = "Arre bhai! Ye yahan ka piece nahi hai!";
-                setTimeout(() => {
-                    document.getElementById('funny-message').innerText = "Sahi jagah par drag karke chodo, warna beizzati pakki hai!";
-                }, 1500);
+                setTimeout(() => { document.getElementById('funny-message').innerText = "Sahi jagah par drag karke chodo, warna beizzati pakki hai!"; }, 1500);
             }
         }
 
@@ -642,16 +554,15 @@
                     if (currentLevel < levels.length) {
                         loadLevel();
                     } else {
-                        document.getElementById('game-area').innerHTML = `<h2>🏆 Game Over!</h2><p>Tumhara dimag sach me chalta hai. Maan gaye ustad!</p>`;
+                        document.getElementById('game-area').innerHTML = `<h2>🏆 Game Over!</h2><p>Tumhara dimag sach me chalta hai. Maan gaye ustad!</p><button onclick="backToMenu('game-area')" class="game-btn" style="background: #333; margin-top: 30px;">🔙 Back to Menu</button>`;
                     }
                 }, 300);
             }
         }
+
         // ==========================================
         // --- GAME 2: CATCH THE HEARTS LOGIC ---
         // ==========================================
-        
-        // Levels set kiye hain: target hearts, speed (kitni der me neeche girega), aur spawnRate (kitni jaldi naya heart aayega)
         const heartLevels = [
             { target: 20, fallSpeed: 4500, spawnRate: 900, msg: "Aww! Ek bahut hi warm aur tight HUG tumhare liye! 🤗 Tumne pehla step clear kar liya meri jaan." },
             { target: 30, fallSpeed: 3500, spawnRate: 700, msg: "Ek pyara sa forehead KISS sirf tumhare liye! 😘 Tum kitni effortlessly mera dil jeet leti ho." },
@@ -665,8 +576,8 @@
         let gameActive = false;
 
         function startHeartGame() {
-            document.getElementById('game-setup').style.display = 'none'; // Button menu hide
-            document.getElementById('heart-game-area').style.display = 'block'; // Game 2 show
+            document.getElementById('game-setup').style.display = 'none'; 
+            document.getElementById('heart-game-area').style.display = 'block'; 
             loadHeartLevel();
         }
 
@@ -680,7 +591,6 @@
             document.getElementById('heart-level-title').innerText = `Level ${currentHLevel + 1}`;
             document.getElementById('sweet-message-overlay').style.display = 'none';
             
-            // Interval lagaya jo bar bar naye hearts banayega
             heartInterval = setInterval(() => createHeart(levelData.fallSpeed), levelData.spawnRate);
         }
 
@@ -691,51 +601,35 @@
             const heart = document.createElement('div');
             heart.classList.add('falling-heart');
             
-            // Random hearts emojis
             const emojis = ['💖', '❤️', '💕', '💗', '💘', '💞'];
             heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            
-            // Screen par random left/right position
             heart.style.left = Math.random() * 85 + '%';
             heart.style.animationDuration = speed + 'ms';
             
-            // Catch karne ka function (Touch ya click karne par)
             const catchEvent = (e) => {
                 e.preventDefault(); 
                 if(!heart.classList.contains('caught')) {
-                    heart.classList.add('caught'); // Mark as caught
-                    heart.style.display = 'none';  // Screen se hata do
+                    heart.classList.add('caught'); 
+                    heart.style.display = 'none';  
                     heartsCaught++;
                     document.getElementById('heart-score').innerText = heartsCaught;
                     checkHeartWin();
                 }
             };
             
-            // Mobile screen (touchstart) aur computer (mousedown) dono par kaam karega
             heart.addEventListener('mousedown', catchEvent);
             heart.addEventListener('touchstart', catchEvent, {passive: false});
-            
             container.appendChild(heart);
             
-            // Animation puri hone par DOM se delete kar do taaki phone hang na ho
-            setTimeout(() => {
-                if(container.contains(heart)) {
-                    heart.remove();
-                }
-            }, speed);
+            setTimeout(() => { if(container.contains(heart)) heart.remove(); }, speed);
         }
 
         function checkHeartWin() {
             let levelData = heartLevels[currentHLevel];
-            
             if (heartsCaught >= levelData.target) {
                 gameActive = false;
-                clearInterval(heartInterval); // Naye hearts aana band
-                
-                // Puraane bache hue hearts hata do
+                clearInterval(heartInterval); 
                 document.getElementById('falling-hearts-container').innerHTML = '';
-                
-                // Sweet message dikhao
                 document.getElementById('sweet-message-text').innerText = levelData.msg;
                 document.getElementById('sweet-message-overlay').style.display = 'flex';
             }
@@ -744,29 +638,27 @@
         function nextHeartLevel() {
             currentHLevel++;
             if (currentHLevel < heartLevels.length) {
-                loadHeartLevel(); // Agla level chalao
+                loadHeartLevel(); 
             } else {
-                // Jab saare levels khatam ho jayein
-                document.getElementById('sweet-message-text').innerHTML = "Game Over! You've filled my heart completely! ❤️♾️<br><br>Ab humari yaadon (Gallery) ka time hai!";
+                document.getElementById('sweet-message-text').innerHTML = "Game Over! You've filled my heart completely! ❤️♾️";
                 document.querySelector('#sweet-message-overlay button').style.display = 'none';
                 
-                // 3 second baad Gallery dikha do
+                // Game pura hone par wapas Menu le jana
                 setTimeout(() => {
-                    document.getElementById('heart-game-area').style.display = 'none';
-                    document.getElementById('gallery-section').style.display = 'block';
-                    window.scrollTo(0, 0);
+                    document.getElementById('sweet-message-overlay').style.display = 'none';
+                    backToMenu('heart-game-area');
                 }, 4000);
             }
         }
+
         // ==========================================
         // --- GAME 3: MEMORY MATCH LOGIC ---
         // ==========================================
-        
         const memoryLevels = [
-            { title: "Level 1: Symbol of Us", items: ['💖', '🌙', '✨', '🌸', '🦋', '🎀', '🧸', '💍'] }, // 8 pairs
-            { title: "Level 2: Name ZUHA", items: ['Z', 'U', 'H', 'A'] }, // 4 pairs
-            { title: "Level 3: Name TOSEEF", items: ['T', 'O', 'S', 'E', 'F', '❤️'] }, // 6 pairs
-            { title: "Level 4: Name ZAHRAA", items: ['Z', 'A', 'H', 'R', '✨', '👑'] } // 6 pairs (A pehle se hai to emojis add kiye)
+            { title: "Level 1: Symbol of Us", items: ['💖', '🌙', '✨', '🌸', '🦋', '🎀', '🧸', '💍'] }, 
+            { title: "Level 2: Name ZUHA", items: ['Z', 'U', 'H', 'A'] }, 
+            { title: "Level 3: Name TOSEEF", items: ['T', 'O', 'S', 'E', 'F', '❤️'] }, 
+            { title: "Level 4: Name ZAHRAA", items: ['Z', 'A', 'H', 'R', '✨', '👑'] } 
         ];
 
         let currentMemLevel = 0;
@@ -786,7 +678,6 @@
         }
 
         function loadMemoryLevel() {
-            // Reset variables
             memMoves = 0;
             memPairsFound = 0;
             memTime = 0;
@@ -807,32 +698,24 @@
             const board = document.getElementById('memory-board');
             board.innerHTML = '';
             
-            // Cards Array banana (har item ka duplicate banega)
             let cardsArray = [...levelData.items, ...levelData.items];
-            cardsArray.sort(() => Math.random() - 0.5); // Shuffle cards
+            cardsArray.sort(() => Math.random() - 0.5); 
 
-            // Cards ko HTML me dalna
             cardsArray.forEach(symbol => {
                 const card = document.createElement('div');
                 card.classList.add('mem-card');
-                card.dataset.framework = symbol; // Match check karne ke liye
+                card.dataset.framework = symbol; 
 
-                card.innerHTML = `
-                    <div class="mem-face mem-front"></div>
-                    <div class="mem-face mem-back">${symbol}</div>
-                `;
-                
+                card.innerHTML = `<div class="mem-face mem-front"></div><div class="mem-face mem-back">${symbol}</div>`;
                 card.addEventListener('click', flipCard);
                 board.appendChild(card);
             });
 
-            // Start Timer
             memTimerInterval = setInterval(() => {
                 memTime++;
                 let mins = Math.floor(memTime / 60);
                 let secs = memTime % 60;
-                document.getElementById('time-count').innerText = 
-                    (mins < 10 ? "0" + mins : mins) + ":" + (secs < 10 ? "0" + secs : secs);
+                document.getElementById('time-count').innerText = (mins < 10 ? "0" + mins : mins) + ":" + (secs < 10 ? "0" + secs : secs);
             }, 1000);
         }
 
@@ -843,29 +726,23 @@
             this.classList.add('flip');
 
             if (!hasFlippedCard) {
-                // Pehla card
                 hasFlippedCard = true;
                 firstCard = this;
                 return;
             }
 
-            // Dusra card
             secondCard = this;
             memMoves++;
             document.getElementById('move-count').innerText = memMoves;
-            
             checkForMatch();
         }
 
         function checkForMatch() {
             let isMatch = firstCard.dataset.framework === secondCard.dataset.framework;
-
             if (isMatch) {
                 disableCards();
                 memPairsFound++;
                 document.getElementById('pair-count').innerText = memPairsFound;
-                
-                // Kya level complete ho gaya?
                 if (memPairsFound === memoryLevels[currentMemLevel].items.length) {
                     setTimeout(() => levelComplete(), 800);
                 }
@@ -881,13 +758,12 @@
         }
 
         function unflipCards() {
-            lockBoard = true; // Dusre cards pe click roko
-
+            lockBoard = true; 
             setTimeout(() => {
                 firstCard.classList.remove('flip');
                 secondCard.classList.remove('flip');
                 resetBoard();
-            }, 1000); // 1 second baad khud band ho jayenge
+            }, 1000); 
         }
 
         function resetBoard() {
@@ -904,87 +780,62 @@
                 loadMemoryLevel();
             } else {
                 alert("Game Finish! You proved you know me the best! 💖");
-                // Yahan se gallery dikha sakte ho ya jo bhi finale hai
-                document.getElementById('memory-game-area').style.display = 'none';
-                document.getElementById('gallery-section').style.display = 'block';
-                window.scrollTo(0, 0);
+                backToMenu('memory-game-area');
             }
         }
 
         // ==========================================
         // --- GAME 4: PHOTO SLIDESHOW LOGIC ---
         // ==========================================
-        
         let currentPhotoIndex = 1;
-        const totalPhotos = 20; // 20 photos set ki hain
+        const totalPhotos = 20; 
         let isPhotoAnimating = false;
 
         function startGame4() {
             document.getElementById('game-setup').style.display = 'none';
             document.getElementById('game-4-area').style.display = 'block';
-            
-            // Gaana chalu karna
             const music = document.getElementById('bg-music');
             music.play().catch(err => console.log("User ko pehle screen par click karna padega music ke liye", err));
         }
 
-        // Ye function gayab hote time chote hearts banayega
         function leaveMagicHearts() {
             const container = document.getElementById('photo-box');
-            
             for(let i = 0; i < 6; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
                     heart.innerHTML = '✨❤️';
                     heart.classList.add('magic-heart');
-                    
-                    // Random jagah se dil udayenge
                     heart.style.left = (Math.random() * 70 + 10) + '%';
                     heart.style.top = (Math.random() * 70 + 10) + '%';
-                    
                     container.appendChild(heart);
-                    
-                    // Animation ke baad heart remove kar do
                     setTimeout(() => heart.remove(), 1000);
-                }, i * 80); // Thoda thoda gap dekar heart niklenge
+                }, i * 80); 
             }
         }
 
         function changePhoto(direction) {
-            if (isPhotoAnimating) return; // Agar animation chal raha hai, to double click ignore karo
+            if (isPhotoAnimating) return; 
             isPhotoAnimating = true;
 
             const img = document.getElementById('gallery-img');
-            
-            // 1. Dil udao aur purani photo ko fade out karo
             leaveMagicHearts();
             img.classList.remove('photo-fade-in');
             img.classList.add('photo-fade-out');
 
             setTimeout(() => {
-                // 2. Photo ka number update karo
                 currentPhotoIndex += direction;
-                
-                // Agar 20 ke baad next kare, toh wapas 1 par aajaye
                 if (currentPhotoIndex > totalPhotos) currentPhotoIndex = 1;
                 if (currentPhotoIndex < 1) currentPhotoIndex = totalPhotos;
 
-                // Number ko 01, 02 format me badalna
                 let photoNum = currentPhotoIndex < 10 ? '0' + currentPhotoIndex : currentPhotoIndex;
                 img.src = 'zuha' + photoNum + '.png';
-                
-                // Counter text update
                 document.getElementById('photo-counter').innerText = currentPhotoIndex;
 
-                // 3. Nayi photo ko fade in karo
                 img.classList.remove('photo-fade-out');
                 img.classList.add('photo-fade-in');
                 
-                setTimeout(() => {
-                    isPhotoAnimating = false; // Animation khatam, ab dobara click kar sakte hain
-                }, 500);
-
-            }, 500); // Fade out hone ka intezaar
+                setTimeout(() => { isPhotoAnimating = false; }, 500);
+            }, 500); 
         }
 
         function nextPhoto() { changePhoto(1); }
@@ -993,17 +844,11 @@
         // ==========================================
         // --- GAME 5: DAILY LETTER LOGIC ---
         // ==========================================
-        
-        // Tum yahan text change kar sakte ho. \n ka matlab hai "Next Line" (Enter)
         const dailyLetters = [
             "My dear forever,\n\nAaj pehla din hai is naye safar ka. Tumhari ek muskurahat mera poora din bana deti hai. I promise to always be the reason behind that smile. I love you more than words can say. ❤️",
-            
             "My dear forever,\n\nDay 2 aur mera pyar tumhare liye aur badh gaya hai. Yaad hai humari pehli mulakat? Waisa hi magic aaj bhi feel hota hai jab tum paas hoti ho. Tum mere liye sab kuch ho. 💕",
-            
             "My dear forever,\n\nDay 3! Pata hai tumhari sabse achi baat kya hai? Tumhari aankhein... unme puri duniya dekhi hai maine. Main kabhi in aankhon me aansu nahi aane dunga. 🥺❤️",
-            
             "My dear forever,\n\nDay 4. Main chahta hu ki humesha aise hi tumhara haath pakad kar chalu. Chahe raasta kaisa bhi ho, sath bas tumhara chahiye. You are my happy place. 🏡💖",
-            
             "My dear forever,\n\nDay 5. Ye aakhiri letter nahi hai, balki humari forever story ka ek chota sa hissa hai. Thank you meri life me aane ke liye aur isey itna khubsurat banane ke liye. Yours always and forever. ♾️💘"
         ];
 
@@ -1013,43 +858,31 @@
             document.getElementById('game-setup').style.display = 'none';
             document.getElementById('letter-game-area').style.display = 'block';
             
-            // Scroll open karna
             const paper = document.getElementById('scroll-paper');
             const textElement = document.getElementById('handwritten-text');
-            textElement.innerHTML = ''; // Purana text hatao
+            textElement.innerHTML = ''; 
             
             setTimeout(() => {
                 paper.classList.add('open');
-                
-                // 2 second baad (jab paper pura khul jaye), likhna shuru karo
-                setTimeout(() => {
-                    if(!isWriting) writeDailyLetter();
-                }, 2000); 
+                setTimeout(() => { if(!isWriting) writeDailyLetter(); }, 2000); 
             }, 300);
         }
 
         function writeDailyLetter() {
             isWriting = true;
             
-            // Date Check Logic (Aaj konsa din hai)
             let savedDate = localStorage.getItem('lastLetterDate');
             let currentDayCount = parseInt(localStorage.getItem('letterDayCount')) || 0;
-            let todayStr = new Date().toDateString(); // Example: "Mon Aug 04 2024"
+            let todayStr = new Date().toDateString(); 
 
             if (savedDate !== todayStr) {
-                // Agar aaj ki date aur saved date alag hai, yani naya din aa gaya
-                if (savedDate !== null) { 
-                    currentDayCount++; // Din badha do
-                }
+                if (savedDate !== null) { currentDayCount++; }
                 localStorage.setItem('lastLetterDate', todayStr);
                 localStorage.setItem('letterDayCount', currentDayCount);
             }
             
-            // Limit to max letters (5 letters hain, toh index 0 se 4 tak)
             let letterIndex = currentDayCount;
-            if (letterIndex >= dailyLetters.length) {
-                letterIndex = dailyLetters.length - 1; // 5 din baad humesha aakhiri letter hi dikhega
-            }
+            if (letterIndex >= dailyLetters.length) { letterIndex = dailyLetters.length - 1; }
 
             const letterText = dailyLetters[letterIndex];
             const textElement = document.getElementById('handwritten-text');
@@ -1059,7 +892,6 @@
             
             function typeWriter() {
                 if (charIndex < letterText.length) {
-                    // Agar \n aaye toh line break (<br>) add karo
                     if (letterText.charAt(charIndex) === '\n') {
                         textElement.innerHTML += '<br>';
                     } else {
@@ -1067,22 +899,18 @@
                     }
                     charIndex++;
                     
-                    // Likhne ki speed (Randomized for real handwriting feel 30ms-90ms)
                     let randomSpeed = Math.floor(Math.random() * 60) + 30;
-                    
-                    // Paper ko auto-scroll karna agar text zyada ho jaye
                     const paper = document.getElementById('scroll-paper');
                     paper.scrollTop = paper.scrollHeight;
                     
                     setTimeout(typeWriter, randomSpeed);
                 } else {
-                    textElement.classList.remove('pen-cursor'); // Likhna khatam hone par pen cursor hata do
+                    textElement.classList.remove('pen-cursor'); 
                     isWriting = false;
                 }
             }
             typeWriter();
         }
-
 
     </script>
 </body>

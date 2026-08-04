@@ -213,6 +213,32 @@
             box-shadow: 0 6px 25px rgba(255, 75, 75, 0.9);
             background: linear-gradient(135deg, #e50914, #ff4b4b);
         }
+         /* --- NEW BUTTON --- */
+        .new-btn {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: linear-gradient(135deg, #ff4b4b, #e50914);
+            color: white;
+            padding: 15px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            text-decoration: none;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(255, 75, 75, 0.6);
+            border: 2px solid #ffd700;
+            transition: 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .new-btn:hover {
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 6px 25px rgba(255, 75, 75, 0.9);
+            background: linear-gradient(135deg, #e50914, #ff4b4b);
+        }
     </style>
 </head>
 <body class="font-sansCore relative selection:bg-softPink selection:text-darkFilm">
@@ -408,7 +434,9 @@
     </main>
 
     <!-- Happy Birthday Button (Goes to game.html) -->
-    <button onclick="checkBirthdayPassword()" class="birthday-btn" style="font-family: 'Playfair Display', serif; cursor: pointer;">Happy Birthday, My forever</button>
+    <button onclick="checkBirthdayPassword()" class="birthday-btn" style="font-family: 'Playfair Display', serif; cursor: pointer;">Kuchupuchu Kaha Ho Tum</button>
+ <!-- Happy Birthday Button (Goes to game.html) -->
+    <button onclick="checkNewPassword()" class="new-btn" style="font-family: 'Playfair Display', serif; cursor: pointer;">Ye kuch naya hai</button>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
@@ -416,7 +444,7 @@
         // ==========================
         // WEBSITE SETTINGS
         // ==========================
-        const WEBSITE_NAME = "Happy Birthday, My Forever";
+        const WEBSITE_NAME = "Gandi Bachi Jara Bhi Piyar Nahi Karte";
         const MAIN_FONT = "Plus Jakarta Sans";
         const TEXT_COLOR = "#ffffff";
 
@@ -424,7 +452,7 @@
         // INTRO SCREEN (SCENE 1)
         // ==========================
         const INTRO_BACKGROUND = "Photo01.png";
-        const INTRO_TEXT = `Every love story is beautiful,\nbut ours is my favorite...`;
+        const INTRO_TEXT = `Piyar To Sab Karte Hai,\nhamara to PagalPan Hai JIIIIIIIIiiiiiiii`;
         const INTRO_TEXT_COLOR = "#FFD700";
         const INTRO_FONT = "Georgia";
         const INTRO_FONT_SIZE_MOBILE = "2rem";
@@ -437,9 +465,9 @@
         // ==========================
         // LOVE COUNTER
         // ==========================
-        const LOVE_NAME_1 = "Happy Birthday";
-        const LOVE_NAME_2 = "My Forever";
-        const COUNTER_TITLE = "👑 Us Malika Ke Naam, Jisne Mere Dil Par Hamesha ke Liye Kabza Kar Liya...";
+        const LOVE_NAME_1 = "Gande Bache";
+        const LOVE_NAME_2 = "Badtameez";
+        const COUNTER_TITLE = "👑 Us Malika Ke Name Jisne Mera Sara Khoon Pee Liyaaaaaaaaaaaaa";
         const LOVE_START_DATE = "2023-08-01";
         const LOVE_NAME_COLOR = "#f48fb1";
         const LOVE_NAME_FONT = "Playfair Display";
@@ -624,12 +652,24 @@
         // HAPPY BIRTHDAY BUTTON PASSWORD LOGIC 
         // ==========================
         function checkBirthdayPassword() {
-            let pass = prompt("Warning! 3 galat password ke baad aapse 5 hugs aur 10 kisses ka jurmana vasool kiya jayega. 😏💋");
+            let pass = prompt("Warning! Kuchupuchu kaha ho tum muje call karo na mera man nahi lag raha hai golu molu, babu ki yad aa rahi hai");
             
-            if (pass === "Zahraa") {
+            if (pass === "Kuchupuchu") {
                 window.location.href = "game.html";
             } else if (pass !== null) {
-                alert("Areee Madam! 😒 Itna bhi yaad nahi? Password galat hai! Lagta hai meri yaad me thodi kami aa gayi hai. Chaliye... ek aur chance. ❤️");
+                alert("Malkin ye kya kar rahe ho ase to moment miss kar doge gande bache jara sa bhi dhiyan nahi rakhate ho chalo ab pass dalo Kuchupuchu");
+            }
+        }
+         // ==========================
+        // NEW BUTTON PASSWORD LOGIC 
+        // ==========================
+        function checkNewPassword() {
+            let pass = prompt("Warning! bacha yr etni aasani se nahi khulne wala jiiiii");
+            
+            if (pass === "Gande") {
+                window.location.href = "game.html";
+            } else if (pass !== null) {
+                alert("Jao malik se puch kar aao");
             }
         }
     </script>

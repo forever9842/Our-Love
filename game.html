@@ -351,7 +351,43 @@
             animation: blink 0.7s infinite;
         }
         @keyframes blink { 50% { border-color: transparent; } }
+/* --- GAME 6 QUIZ CSS --- */
+        .quiz-option-btn {
+            background-color: #4834d4;
+            color: white;
+            border: 2px solid #e056fd;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
 
+        .quiz-option-btn:hover {
+            background-color: #e056fd;
+            transform: scale(1.02);
+        }
+
+        .quiz-option-btn.correct {
+            background-color: #2ed573 !important;
+            border-color: #2ed573 !important;
+        }
+
+        .quiz-option-btn.wrong {
+            background-color: #ff4757 !important;
+            border-color: #ff4757 !important;
+            animation: shake 0.4s;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
     </style>
 </head>
 <body>
@@ -378,11 +414,12 @@
         <div id="game-setup">
             <h1 style="color: #ffd700; font-family: 'Playfair Display', serif; margin-top: 30px;">Choose a Surprise ❤️</h1>
             
-            <button class="game-btn" onclick="startGame()" style="background-color: #ff4757;">Game 1: Jod Tod 🧩</button><br>
-            <button class="game-btn" onclick="startHeartGame()" style="background-color: #ff6b81;">Game 2: Catch My Love 💖</button><br>
-            <button class="game-btn" onclick="startMemoryGame()" style="background-color: #8c7ae6;">Game 3: Memory Match 🧩</button><br>
-            <button class="game-btn" onclick="startGame4()" style="background-color: #ff9f43;">Game 4: Moments of Us 📸</button><br>
-            <button class="game-btn" onclick="startLetterGame()" style="background-color: #2ed573;">A Letter for You 💌</button>
+            <button class="game-btn" onclick="startGame()" style="background-color: #ff4757;">Jod Tod 🧩</button><br>
+            <button class="game-btn" onclick="startHeartGame()" style="background-color: #ff6b81;">Catch My Love 💖</button><br>
+            <button class="game-btn" onclick="startMemoryGame()" style="background-color: #8c7ae6;">Memory Match</button><br>
+            <button class="game-btn" onclick="startGame4()" style="background-color: #ff9f43;">Moments of Us 📸</button><br>
+            <button class="game-btn" onclick="startLetterGame()" style="background-color: #2ed573;">A Letter for You 💌</button><br>
+            <button class="game-btn" onclick="startQuizGame()" style="background-color: #e056fd;">The 'Us' Quiz 🤔💖</button>
         </div>
 
         <!-- Game 1 Area -->
@@ -455,8 +492,26 @@
             </div>
             <button onclick="backToMenu('letter-game-area')" class="game-btn" style="background: rgba(255,255,255,0.2); margin-top: 30px;">🔙 Back to Menu</button>
         </div>
+        </div>
+    <!-- Game 6 (The 'Us' Quiz) Area Start -->
+        <div id="quiz-game-area" style="display: none; max-width: 600px; margin: 20px auto; padding: 30px 20px; text-align: center; background: radial-gradient(circle, #686de0, #000); border: 3px solid #e056fd; border-radius: 15px; box-shadow: 0 0 20px rgba(224, 86, 253, 0.5); position: relative;">
+            
+            <h2 style="color: #f5f6fa; font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 10px;">How well do you know 'US'? 👩‍❤️‍👨</h2>
+            <p style="color: #dff9fb; font-style: italic; margin-bottom: 25px;">Sahi jawab do aur mera dil jeeto! fir score ka photo bhejo</p>
+            
+            <div id="quiz-container" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                <h3 id="quiz-question" style="color: #fff; font-size: 20px; margin-bottom: 20px;">Question will appear here</h3>
+                
+                <div id="quiz-options" style="display: flex; flex-direction: column; gap: 12px;">
+                    <!-- Options JS se aayenge -->
+                </div>
+            </div>
 
-    </div>
+            <p style="color: #f6e58d; margin-top: 20px; font-weight: bold;">Score: <span id="quiz-score">0</span> / <span id="quiz-total">5</span></p>
+
+            <button onclick="backToMenu('quiz-game-area')" class="game-btn" style="background: rgba(255,255,255,0.2); margin-top: 20px;">🔙 Back to Menu</button>
+        </div>
+        <!-- Game 6 Area End -->
     <!-- MAIN MENU CONTAINER END -->
 
 
@@ -945,7 +1000,114 @@
             }
             typeWriter();
         }
+        // ==========================================
+        // --- GAME 6: THE 'US' QUIZ LOGIC ---
+        // ==========================================
+        
+        // Tum yahan apne questions, options aur sahi jawab (0, 1, 2, 3) set kar sakte ho
+        const quizData = [
+            {
+                question: "Humari sabse pehli date kahan thi? ☕",
+                options: ["Kefe me", "Choching me", "Gar par", "12 ke bad trofee lene gaye the jab"],
+                correct: 1, // 1 ka matlab pehla option (Choching me) sahi hai
+                msg: "Exactly! Wahan tumhari wo pehli smile dekh kar hi main pighal gaya tha. ❤️"
+            },
+            {
+                question: "Meri sabse favorite cheez tumhare baare mein kya hai? 🤔",
+                options: ["Tumhari aankhein", "Tumhara nature", "Tumhari smile", "Upar likhi har ek cheez!"],
+                correct: 3, 
+                msg: "pagal ladki! Tumhare andar aisi koi cheez nahi jo muje pasand na ho. 😘"
+            },
+            {
+                question: "Muje gussa aane par tum kya karti ho? 😤",
+                options: ["Khud bhi gussa ho jati ho", "Pyar se mana leti ho", "Ignore karti ho", "Dat laga kar mana leti ho"],
+                correct: 1,
+                msg: "Aur tumhare usi pyar ke aage mera gussa ek second mein chhoo mantar ho jata hai. 🥺💖"
+            },
+            {
+                question: "Humara sabse piyara moment konsa hai?",
+                options: ["Night walk", "Morning walk", "bick drive", "Holding hand"],
+                correct: 2, // Edit this as per your real story
+                msg: "Sahi jawab! Wo safar bahut khubsurat tha, bilkul tumhari tarah. ✨"
+            },
+            {
+                question: "Main tumhe kitna pyar karta hu? ♾️",
+                options: ["Thoda sa", "Bahut sara", "Karta hi nahi", "Mere piyar se kam"],
+                correct: 3,
+                msg: "You are my entire world. Shabdon ki etni gahrai nahi ki mera pyar describe kar sake. I love you forever 💘"
+            }
+        ];
 
+        let currentQuestionIndex = 0;
+        let quizScore = 0;
+
+        function startQuizGame() {
+            document.getElementById('game-setup').style.display = 'none';
+            document.getElementById('quiz-game-area').style.display = 'block';
+            currentQuestionIndex = 0;
+            quizScore = 0;
+            document.getElementById('quiz-score').innerText = quizScore;
+            document.getElementById('quiz-total').innerText = quizData.length;
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            const currentQuiz = quizData[currentQuestionIndex];
+            document.getElementById('quiz-question').innerText = `Q${currentQuestionIndex + 1}: ` + currentQuiz.question;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = ''; // Purane options clear karo
+            
+            currentQuiz.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.classList.add('quiz-option-btn');
+                btn.innerText = opt;
+                btn.onclick = () => checkQuizAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkQuizAnswer(selectedIndex, btnElement) {
+            const currentQuiz = quizData[currentQuestionIndex];
+            const allButtons = document.getElementById('quiz-options').querySelectorAll('button');
+            
+            // Saare buttons disable kar do ek click ke baad
+            allButtons.forEach(b => b.disabled = true);
+
+            if (selectedIndex === currentQuiz.correct) {
+                // Sahi Jawab
+                btnElement.classList.add('correct');
+                quizScore++;
+                document.getElementById('quiz-score').innerText = quizScore;
+                
+                setTimeout(() => {
+                    alert("❤️ " + currentQuiz.msg);
+                    nextQuestion();
+                }, 500);
+            } else {
+                // Galat Jawab
+                btnElement.classList.add('wrong');
+                // Sahi wale ko green kardo
+                allButtons[currentQuiz.correct].classList.add('correct');
+                
+                setTimeout(() => {
+                    alert("Arey baba, ye galat hai! 😂 Chalo koi nahi pagal, agla try karo.");
+                    nextQuestion();
+                }, 800);
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuizQuestion();
+            } else {
+                setTimeout(() => {
+                    alert(`Quiz Khatam! Tumhara Score: ${quizScore}/${quizData.length} 🏆\n\nTumne prove kar diya ki tum meri life ki sabse special insaan ho.I Love you forever 💕`);
+                    backToMenu('quiz-game-area');
+                }, 500);
+            }
+        }
     </script>
 </body>
 </html>

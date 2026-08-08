@@ -65,7 +65,7 @@
         .orb-2 { 
              width: 500px; 
              height: 500px; 
-             background: #4a0e2e;    
+             background: #4a0e2e;   
              bottom: -20%; 
              right: -10%; 
              animation-delay: -5s; 
@@ -190,7 +190,7 @@
        /* --- HAPPY BIRTHDAY BUTTON (Upar wala button) --- */
         .birthday-btn {
             position: absolute;
-            bottom: 100px; /* Ise 30px se badha kar 100px kar diya taaki overlap na ho */
+            bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
@@ -217,7 +217,7 @@
         /* --- NEW BUTTON (Neeche wala button) --- */
         .new-btn {
             position: absolute;
-            bottom: 30px; /* Ye wahi rahega */
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
@@ -239,6 +239,36 @@
             transform: translateX(-50%) scale(1.05);
             box-shadow: 0 6px 25px rgba(255, 75, 75, 0.9);
             background: linear-gradient(135deg, #e50914, #ff4b4b);
+        }
+
+        /* --- SCRATCH CARD CSS --- */
+        .scratch-card-box {
+            width: 100px;
+            height: 120px;
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+        .scratch-card-box:hover { transform: scale(1.05); }
+        
+        .scratch-card-box.locked {
+            background: #7f8c8d;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
@@ -436,9 +466,54 @@
 
     <!-- Happy Birthday Button (Goes to game.html) -->
     <button onclick="checkBirthdayPassword()" class="birthday-btn" style="font-family: 'Playfair Display', serif; cursor: pointer;">Kuchupuchu Kaha Ho Tum</button>
- <!-- Happy Birthday Button (Goes to game.html) -->
+    <!-- New Button (Opens Scratch Game Modal) -->
     <button onclick="checkNewPassword()" class="new-btn" style="font-family: 'Playfair Display', serif; cursor: pointer;">Ye kuch naya hai</button>
 
+    <!-- ============================================== -->
+    <!-- SCRATCH CARD GAME AREA & MODALS                -->
+    <!-- ============================================== -->
+    
+    <!-- SCRATCH CARD MAIN AREA -->
+    <div id="scratch-game-area" style="display: none; position: fixed; inset: 0; z-index: 1500; overflow-y: auto; background: rgba(10, 5, 8, 0.95); backdrop-filter: blur(10px); padding: 50px 20px; text-align: center;">
+        
+        <div style="max-width: 600px; margin: 0 auto; background: radial-gradient(circle, #2c3e50, #000); border: 3px solid #f1c40f; border-radius: 15px; box-shadow: 0 0 30px rgba(241, 196, 15, 0.4); padding: 30px 20px;">
+            <h2 style="color: #f1c40f; font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 5px;">Your Lucky Scratch Cards ✨</h2>
+            <p style="color: #bdc3c7; font-size: 14px; margin-bottom: 30px;">Har 2 din mein ek naya surprise unlock hoga!</p>
+            
+            <!-- Grid for 5 cards -->
+            <div id="cards-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+                <!-- JavaScript will render cards here -->
+            </div>
+
+            <!-- BACK BUTTON -->
+            <button onclick="document.getElementById('scratch-game-area').style.display='none';" class="text-white bg-white/10 hover:bg-white/20 border border-white/20 px-6 py-2 rounded-full mt-10 transition-all shadow-lg">🔙 Back to Page</button>
+        </div>
+    </div>
+
+    <!-- SCRATCH POPUP MODAL -->
+    <div id="scratch-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; flex-direction: column;">
+        <h3 style="color: white; margin-bottom: 20px; font-family: 'Playfair Display', serif; font-size: 24px;">Apni ungli se scratch karo! 👆</h3>
+        
+        <div id="scratch-container" style="position: relative; width: 280px; height: 280px; background: #fff; border-radius: 15px; box-shadow: 0 0 30px rgba(255,255,255,0.2); overflow: hidden;">
+            <!-- Surprise Text -->
+            <div id="surprise-text" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; font-size: 20px; font-weight: bold; color: #e74c3c; font-family: 'Plus Jakarta Sans', sans-serif;">
+                Surprise Here
+            </div>
+            <!-- Scratch Canvas -->
+            <canvas id="scratch-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; touch-action: none; cursor: crosshair;"></canvas>
+        </div>
+
+        <!-- WhatsApp Redeem Button -->
+        <button id="whatsapp-btn" onclick="sendToBabu()" style="display: none; background-color: #25D366; color: white; border: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 30px; margin-top: 30px; cursor: pointer; box-shadow: 0 5px 25px rgba(37, 211, 102, 0.5); animation: popIn 0.5s;">
+            Babu ko bhejo aur Redeem kar lo 💚
+        </button>
+
+        <button onclick="closeScratchModal()" style="margin-top: 25px; background: none; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 8px 25px; border-radius: 20px; cursor: pointer; hover:bg-white/10 transition-all;">Band Karo</button>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- MAIN SCRIPTS                                   -->
+    <!-- ============================================== -->
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
@@ -661,17 +736,172 @@
                 alert("Malkin ye kya kar rahe ho ase to moment miss kar doge gande bache jara sa bhi dhiyan nahi rakhate ho chalo ab pass dalo Kuchupuchu");
             }
         }
-         // ==========================
-        // NEW BUTTON PASSWORD LOGIC 
+        
+        // ==========================
+        // NEW BUTTON PASSWORD LOGIC (UPDATED FOR SCRATCH CARD)
         // ==========================
         function checkNewPassword() {
             let pass = prompt("Warning! bacha yr etni aasani se nahi khulne wala jiiiii");
             
             if (pass === "Gande") {
-                window.location.href = "game.html";
+                openScratchGame(); // Open Scratch Game directly!
             } else if (pass !== null) {
                 alert("Jao malik se puch kar aao");
             }
+        }
+
+        // ==========================================
+        // --- SCRATCH CARD & WHATSAPP LOGIC ---
+        // ==========================================
+
+        const surprises = [
+            "🍕 Zomato par tumhari pasand ka order, On Me!",
+            "🛍️ Lo pakdo ₹500 aur kar lo shopping! (Bas isse zyada ka bill mat faadna babu 😝)",
+            "🏍️ Aaj raat ki Long Drive! Bike par baitho aur chalte hain highway par thandi hawa aur dhaba wali chai peene! ☕",
+            "🎵 Aapki farmaish, humari aawaz! Jo song bologi, aaj main tumhe pura ga kar sunaunga (Beshak thoda besura ho 😆🎤)",
+            "🎨 Video Call & Art! Tum video call karna aur jo cute si drawing bologi, main live bana kar dikhaunga! 🖌️✨"
+        ];
+
+        let currentSurpriseText = "";
+        let scratchCount = 0;
+        let isDrawing = false;
+
+        function openScratchGame() {
+            document.getElementById('scratch-game-area').style.display = 'block';
+            renderCards();
+        }
+
+        function renderCards() {
+            const grid = document.getElementById('cards-grid');
+            grid.innerHTML = '';
+
+            // Set start date to today (August 8, 2026) if not already set
+            let startDateStr = localStorage.getItem('scratchStartDate');
+            let startDate;
+            
+            if (!startDateStr) {
+                startDate = new Date();
+                startDate.setHours(0,0,0,0);
+                localStorage.setItem('scratchStartDate', startDate.toISOString());
+            } else {
+                startDate = new Date(startDateStr);
+            }
+
+            let today = new Date();
+            today.setHours(0,0,0,0);
+            
+            let diffTime = Math.abs(today - startDate);
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+
+            // Create 5 Cards
+            for (let i = 0; i < 5; i++) {
+                let cardDiv = document.createElement('div');
+                cardDiv.classList.add('scratch-card-box');
+                
+                let unlockDay = i * 2; // Unlock on Day 0, 2, 4, 6, 8
+
+                if (diffDays >= unlockDay) {
+                    // Unlocked
+                    cardDiv.innerHTML = `🎁<br>Card ${i + 1}<br><span style="font-size:12px; font-weight:normal;">Tap to open</span>`;
+                    cardDiv.onclick = () => openScratchModal(surprises[i]);
+                } else {
+                    // Locked
+                    let daysLeft = unlockDay - diffDays;
+                    cardDiv.classList.add('locked');
+                    cardDiv.innerHTML = `🔒<br>Card ${i + 1}<br><span style="font-size:10px; font-weight:normal;">Opens in ${daysLeft} days</span>`;
+                    cardDiv.onclick = () => alert(`Thoda sabar karo jaan! Ye card ${daysLeft} din baad open hoga. ⏳`);
+                }
+                
+                grid.appendChild(cardDiv);
+            }
+        }
+
+        function openScratchModal(surpriseText) {
+            currentSurpriseText = surpriseText;
+            document.getElementById('scratch-modal').style.display = 'flex';
+            document.getElementById('surprise-text').innerText = surpriseText;
+            document.getElementById('whatsapp-btn').style.display = 'none'; 
+            
+            initCanvas();
+        }
+
+        function closeScratchModal() {
+            document.getElementById('scratch-modal').style.display = 'none';
+        }
+
+        // --- CANVAS SCRATCH LOGIC ---
+        function initCanvas() {
+            const canvas = document.getElementById('scratch-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = 280;
+            canvas.height = 280;
+            scratchCount = 0;
+
+            ctx.fillStyle = '#95a5a6';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#ecf0f1';
+            ctx.font = '24px Plus Jakarta Sans';
+            ctx.textAlign = 'center';
+            ctx.fillText('Scratch Here 🪙', canvas.width / 2, canvas.height / 2);
+
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+            ctx.lineWidth = 35; 
+            ctx.globalCompositeOperation = 'destination-out'; 
+
+            canvas.onmousedown = (e) => { isDrawing = true; scratch(e); };
+            canvas.onmousemove = (e) => { if(isDrawing) scratch(e); };
+            canvas.onmouseup = () => isDrawing = false;
+            
+            canvas.ontouchstart = (e) => { isDrawing = true; scratch(e); };
+            canvas.ontouchmove = (e) => { if(isDrawing) { e.preventDefault(); scratch(e); } };
+            canvas.ontouchend = () => isDrawing = false;
+        }
+
+        function scratch(e) {
+            const canvas = document.getElementById('scratch-canvas');
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+            
+            let x, y;
+            if(e.touches) {
+                x = e.touches[0].clientX - rect.left;
+                y = e.touches[0].clientY - rect.top;
+            } else {
+                x = e.clientX - rect.left;
+                y = e.clientY - rect.top;
+            }
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+
+            scratchCount++;
+            
+            if (scratchCount > 80) {
+                canvas.style.opacity = '0'; 
+                document.getElementById('whatsapp-btn').style.display = 'block'; 
+                
+                setTimeout(() => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    canvas.style.opacity = '1';
+                }, 300);
+            }
+        }
+
+       // --- WHATSAPP SEND LOGIC (100% Mobile Working) ---
+        function sendToBabu() {
+            let phoneNumber = "918923491317"; 
+            let message = `OMG! 😍 Maine apna Scratch Card open kiya aur mujhe mila hai:\n\n*👉 ${currentSurpriseText}*\n\nChalo ab jaldi se mera gift mujhe do! 💖`;
+            
+            // api.whatsapp.com mobile aur desktop dono par best kaam karta hai
+            let whatsappURL = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+            
+            // window.open ki jagah window.location.href use karenge taaki popup block na ho
+            window.location.href = whatsappURL;
         }
     </script>
 </body>
